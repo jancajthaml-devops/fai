@@ -1,0 +1,7 @@
+#!bin/bash
+
+$ROOTCMD dpkg --clear-avail 
+
+$ROOTCMD dpkg-query -l fai-client fai-nfsroot fai-setup-storage dracut-network dracut
+
+$ROOTCMD ln -f /bin/true /sbin/initctl

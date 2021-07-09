@@ -1,0 +1,11 @@
+--- /usr/sbin/fai-make-nfsroot.orig	2015-05-26 06:12:08.000000000 -0500
++++ /usr/sbin/fai-make-nfsroot	2015-11-24 12:59:41.000000000 -0500
+@@ -498,7 +498,8 @@
+     $ROOTCMD apt-get update
+     # fai-nfsroot must be sucessfully installed before anything else
+-    $ROOTCMD apt-get -yf --no-install-recommends install fai-nfsroot dracut-network dracut-config-generic $nfscommon
++    $ROOTCMD aptitude -Rfy install fai-nfsroot=5.8.4 fai-setup-storage=5.8.4 fai-client=5.8.4 dracut-network dracut dracut-config-generic $nfscommon systemd-sysv-
++    $ROOTCMD apt-mark hold fai-nfsroot fai-setup-storage fai-client
+     $ROOTCMD apt-get -y dist-upgrade
+     # patch dracut. Do not fail if network is not available
+     local fn=$(find $NFSROOT/usr/lib/dracut/modules.d/ -name net-genrules.sh)

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+$ROOTCMD sed -ri 's/(use_lvmetad )= 1/\1= 0/' /etc/lvm/lvm.conf

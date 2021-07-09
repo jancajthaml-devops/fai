@@ -1,0 +1,72 @@
+# package list for creating the NFSROOT
+
+PACKAGES aptitude
+
+fai-nfsroot=5.8.4  
+fai-client=5.8.4 
+fai-setup-storage=5.8.4 
+module-init-tools 
+ssh 
+rdate 
+lshw
+nfs-common 
+rpcbind
+rsync
+lshw 
+procinfo
+dump 
+reiserfsprogs 
+xfsprogs 
+xfsdump 
+btrfs-progs
+hwinfo 
+hdparm 
+smartmontools 
+nvme-cli
+rdate
+zile
+numactl
+udns-utils
+netcat-traditional 
+nmap
+pxelinux 
+syslinux-common
+libapt-pkg-perl 
+apt-transport-https
+usbutils 
+pciutils
+startpar 
+dracut-network
+dracu
+sysvinit-core 
+ssh
+netselect
+mdadm
+busybox
+iproute2 
+kbd 
+dialog 
+dnsutils 
+ntpdate 
+parted 
+lvm2 
+e2fsprogs 
+less 
+lftp 
+cupt
+xz-utils 
+pigz 
+pixz 
+lbzip2
+grub-pc
+dracut-network 
+live-boot- 
+live-boot-initramfs-tools-
+
+linux-image-4.19.0-17-amd64
+
+PACKAGES install-norec DEBIAN_10
+fdisk gpg
+
+PACKAGES install-norec DEBIAN_11
+fdisk gpg

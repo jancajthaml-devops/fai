@@ -1,0 +1,11 @@
+--- /etc/fai/nfsroot.conf.orig	2021-07-09 20:57:19.000000000 +0200
++++ /etc/fai/nfsroot.conf	2021-07-09 20:57:41.000000000 +0200
+@@ -7,7 +7,7 @@
+ NFSROOT=/srv/fai/nfsroot
+ TFTPROOT=/srv/tftp/fai
+ NFSROOT_HOOKS=/etc/fai/nfsroot-hooks/
+-FAI_DEBOOTSTRAP_OPTS="--exclude=wget"
++FAI_DEBOOTSTRAP_OPTS="--exclude=wget --exclude=info --include=aptitude"
+ 
+ # Configuration space
+ FAI_CONFIGDIR=/srv/fai/config
