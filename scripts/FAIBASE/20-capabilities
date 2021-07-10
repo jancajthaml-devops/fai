@@ -20,6 +20,6 @@ if [ -x $target/usr/bin/systemd-detect-virt ] ; then
 fi
 
 # We don't use IPv6
-for FILE in /bin/ping6 /usr/bin/fping6; do
+for FILE in /bin/ping6 /usr/bin/fping6 ; do
 	rm -f $target/$FILE
 done

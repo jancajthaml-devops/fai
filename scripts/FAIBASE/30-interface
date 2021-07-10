@@ -1,6 +1,6 @@
 #! /bin/bash
 
-if [ ! -L $target/etc/resolv.conf -a -e /etc/resolv.conf ]; then
+if [ ! -L $target/etc/resolv.conf -a -e /etc/resolv.conf ] ; then
 	cp -p /etc/resolv.conf $target/etc
 fi
 

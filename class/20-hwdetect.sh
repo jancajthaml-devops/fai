@@ -16,7 +16,7 @@ case $(uname -r) in
       3*) kernelmodules="$kernelmodules mptspi dm-mod md-mod aes dm-crypt" ;;
 esac
 
-for mod in $kernelmodules; do
+for mod in $kernelmodules ; do
     [ "$verbose" ] && echo Loading kernel module $mod
     modprobe -a $mod 1>/dev/null 2>&1
 done
