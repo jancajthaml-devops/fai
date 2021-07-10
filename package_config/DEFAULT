@@ -1,4 +1,1 @@
 PACKAGES aptitude STRETCH64
-linux-image-amd64
-firmware-linux-free
-initramfs-tools

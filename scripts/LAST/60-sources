@@ -1,33 +1,16 @@
 #!/bin/bash
 
-if ifclass DEBIAN_7 ; then
+if ifclass STRETCH64 ; then
 	distro="debian"
-	codename="wheezy"
-elif ifclass DEBIAN_8 ; then
-	distro="debian"
-	codename="jessie"
-elif ifclass UBUNTU_14 ; then
-	distro="ubuntu"
-	codename="trusty"
-elif ifclass UBUNTU_16 ; then
-	distro="ubuntu"
-	codename="xenial"
+	codename="stretch"
 fi
 
-if ifclass -o DEBIAN_7 DEBIAN_8 ; then
+if ifclass -o STRETCH64 ; then
 	cat > $FAI_ROOT/etc/apt/sources.list <<- EOF
 		deb http://ftp.debian.org/debian/ $codename main contrib non-free
 		deb http://ftp.debian.org/debian/ $codename-updates main contrib non-free
 		deb http://ftp.debian.org/debian/ $codename-backports main contrib non-free
 		deb http://security.debian.org/ $codename/updates main contrib non-free
-	EOF
-elif ifclass -o UBUNTU_14 UBUNTU_16 ; then
-	cat > $FAI_ROOT/etc/apt/sources.list <<- EOF
-		deb http://archive.ubuntu.com/ubuntu $codename main restricted universe multiverse
-		deb http://archive.ubuntu.com/ubuntu $codename-updates main restricted universe multiverse
-		deb http://security.ubuntu.com/ubuntu $codename-security main restricted universe multiverse
-		deb http://archive.ubuntu.com/ubuntu $codename-backports main restricted universe multiverse
-		deb http://archive.canonical.com/ubuntu $codename partner
 	EOF
 fi
 
