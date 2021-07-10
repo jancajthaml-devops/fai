@@ -1,6 +1,6 @@
 #! /bin/bash
 
-echo ">>> in update base <<<"
+echo ">>> in update base START <<<"
 
 if [ -n "$APTPROXY" ]; then
     echo "Acquire::http::Proxy \"$APTPROXY\";" > $target/etc/apt/apt.conf.d/02proxy
@@ -11,3 +11,5 @@ fi
 echo force-unsafe-io > $target/etc/dpkg/dpkg.cfg.d/unsafe-io
 
 echo 'Acquire::Languages "none";' > $target/etc/apt/apt.conf.d/no-languages
+
+echo ">>> in update base END <<<"
