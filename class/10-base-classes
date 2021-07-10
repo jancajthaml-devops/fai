@@ -4,7 +4,4 @@
 uname -s | tr '[:lower:]' '[:upper:]'
 [ -x "`which dpkg`" ] && dpkg --print-architecture | tr a-z A-Z
 
-# XXX: FAI 4 deprecated FAICD class but we use it
-[ -d /media/mirror ] && echo "FAICD"
-
 exit 0
