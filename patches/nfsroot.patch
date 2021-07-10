@@ -4,7 +4,7 @@
  NFSROOT=/srv/fai/nfsroot
  TFTPROOT=/srv/tftp/fai
  NFSROOT_HOOKS=/etc/fai/nfsroot-hooks/
--FAI_DEBOOTSTRAP_OPTS="--exclude=wget"
+-FAI_DEBOOTSTRAP_OPTS=
 +FAI_DEBOOTSTRAP_OPTS="--exclude=wget --exclude=info --include=aptitude"
  
  # Configuration space

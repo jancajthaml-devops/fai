@@ -2,9 +2,9 @@
 
 PACKAGES aptitude
 
-fai-nfsroot=5.8.4  
-fai-client=5.8.4 
-fai-setup-storage=5.8.4 
+fai-nfsroot=5.10.3 
+fai-client=5.10.3  
+fai-setup-storage=5.10.3 
 module-init-tools 
 ssh 
 rdate 
@@ -63,10 +63,8 @@ dracut-network
 live-boot- 
 live-boot-initramfs-tools-
 
-linux-image-4.19.0-17-amd64
-
-PACKAGES install-norec DEBIAN_10
-fdisk gpg
+linux-base
 
 PACKAGES install-norec DEBIAN_11
-fdisk gpg
+linux-image-5.10.0-7-amd64
+

@@ -2,6 +2,9 @@
 
 $ROOTCMD dpkg --clear-avail 
 
-$ROOTCMD dpkg-query -l fai-client fai-nfsroot fai-setup-storage dracut-network dracut
+$ROOTCMD apt-get install systemd-sysv- initscripts insserv startpar sysv-rc sysvinit-core
+
+# If rcS.conf is not removed, FAI will be started twice.
+$ROOTCMD rm -v /etc/init/rcS.conf
 
 $ROOTCMD ln -f /bin/true /sbin/initctl

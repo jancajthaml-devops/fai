@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -9,7 +9,7 @@ RUN apt-get update && \
 	apt-get clean
 
 ADD	keys/074BCDE4.asc /tmp/
-RUN	echo "deb http://fai-project.org/download buster koeln" >> /etc/apt/sources.list && \
+RUN	echo "deb http://fai-project.org/download bullseye koeln" >> /etc/apt/sources.list && \
 	apt-key add /tmp/074BCDE4.asc && \
 	rm -f /tmp/074BCDE4.asc
 
@@ -23,8 +23,8 @@ RUN	apt-get update && \
 		bzip2 \
 		initramfs-tools- \
 		ca-certificates \
-		fai-client=5.8.4 \
-		fai-server=5.8.4 \
+		fai-client=5.10.3 \
+		fai-server=5.10.3 \
 		isc-dhcp-server- \
 		nfs-kernel-server- \
 		openbsd-inetd- \
@@ -76,6 +76,8 @@ RUN	sed -ri 's/^(# )?Port:3142/Port:9999/' /etc/apt-cacher-ng/acng.conf && \
 	chmod +x /usr/local/bin/*
 
 VOLUME	/var/cache/apt-cacher-ng
+
+VOLUME	/proc
 
 CMD /etc/init.d/apt-cacher-ng start && \
 	/bin/bash
