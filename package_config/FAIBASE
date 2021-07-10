@@ -1,3 +1,23 @@
-PACKAGES aptitude
-unzip
-bash
+PACKAGES install-norec
+apt-transport-https # is only needed for stretch
+debconf-utils
+file
+less
+linuxlogo
+rsync
+openssh-client openssh-server
+time
+procinfo
+nullmailer
+eject
+locales
+console-setup kbd
+pciutils usbutils
+unattended-upgrades
+
+PACKAGES install AMD64
+linux-image-amd64
+memtest86+
+
+PACKAGES install GRUB_PC
+grub-pc
