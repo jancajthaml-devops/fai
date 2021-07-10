@@ -22,17 +22,12 @@ if [ $do_init_tasks -eq 1 ] ; then
 fi
 
 # Make sure everything is configured properly
-#if ifclass DEBIAN ; then
-        echo "Running \"apt-get -f install\" for the last time."
-        $ROOTCMD apt-get -f install
-#fi
+echo "Running \"apt-get -f install\" for the last time."
+$ROOTCMD apt-get -f install
 
 if [ $FAI_ACTION = "install" ]; then
     lskernels=$(echo $target/boot/vmlinu*)
     [ -f ${lskernels%% *} ] || echo "ERROR: No kernel was installed. Have a look at shell.log" >&2
 fi
-
-# copy sources.list
-#fcopy -iM /etc/apt/sources.list
 
 exit $error

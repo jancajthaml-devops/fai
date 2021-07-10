@@ -43,16 +43,5 @@ openssl
 rng-tools
 rsyslog
 sudo
-traceroute
 udev
 unzip
-vim
-
-PACKAGES aptitude DEBIAN_7
-firmware-bnx2/wheezy-backports
-firmware-bnx2x/wheezy-backports
-
-PACKAGES aptitude DEBIAN_8
-firmware-bnx2
-firmware-bnx2x
-

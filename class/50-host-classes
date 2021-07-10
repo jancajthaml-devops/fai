@@ -6,7 +6,7 @@
 case $HOSTNAME in
 
     demohost)
-	echo "FAIBASE DHCPC DEBIAN STRETCH64 LAST" ;;
+	echo "FAIBASE STRETCH64 LAST" ;;
 
     *)
 	exit 1 ;;
