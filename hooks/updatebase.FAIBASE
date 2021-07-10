@@ -1,5 +1,7 @@
 #! /bin/bash
 
+echo ">>> in update base <<<"
+
 if [ -n "$APTPROXY" ]; then
     echo "Acquire::http::Proxy \"$APTPROXY\";" > $target/etc/apt/apt.conf.d/02proxy
 else
