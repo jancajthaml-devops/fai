@@ -5,8 +5,8 @@
 # use a list of classes for our demo machine
 case $HOSTNAME in
 
-    docker)
-	echo "FAIBASE DHCPC UBUNTU_16 DOCKER" ;;
+    demohost)
+	echo "FAIBASE DHCPC DEBIAN STRETCH64 LAST" ;;
 
     *)
 	exit 1 ;;
