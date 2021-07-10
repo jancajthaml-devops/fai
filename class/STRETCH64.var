@@ -1,0 +1,13 @@
+release=stretch
+apt_cdn=http://deb.debian.org
+security_cdn=http://security.debian.org
+secsuite=stretch/updates
+
+CONSOLEFONT=
+KEYMAP=us-latin1
+
+# MODULESLIST contains modules that will be loaded by the new system,
+# not during installation these modules will be written to /etc/modules
+# If you need a module during installation, add it to $kernelmodules
+# in 20-hwdetect.sh.
+MODULESLIST="usbhid"
