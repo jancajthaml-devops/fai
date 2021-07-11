@@ -2,7 +2,7 @@
 
 ifclass -o CENTOS SLC && exit 0
 
-if [ -d /sys/firmware/efi ]; then
+if [ -d /sys/firmware/efi ] ; then
     echo GRUB_EFI
 elif ifclass -o I386 AMD64 ; then
     echo GRUB_PC

@@ -2,16 +2,16 @@
 
 # define classes for disk_config in an EFI enironment
 
-if [ ! -d /sys/firmware/efi ]; then
+if [ ! -d /sys/firmware/efi ] ; then
     exit 0
 fi
 
-if ifclass HOME; then
+if ifclass HOME ; then
     echo HOME_EFI
-elif ifclass HOME_LVM; then
+elif ifclass HOME_LVM ; then
     echo HOME_LVM_EFI
-elif ifclass ONE; then
+elif ifclass ONE ; then
     echo ONE_EFI
-elif ifclass ONE_LVM; then
+elif ifclass ONE_LVM ; then
     echo ONE_LVM_EFI
 fi
