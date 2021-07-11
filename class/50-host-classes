@@ -6,7 +6,7 @@
 case $HOSTNAME in
 
     demohost)
-	echo "FAIBASE STRETCH64" ;;
+	echo "BASE STRETCH" ;;
 
     *)
 	exit 1 ;;

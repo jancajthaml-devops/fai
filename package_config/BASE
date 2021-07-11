@@ -15,7 +15,7 @@ console-setup kbd
 pciutils usbutils
 unattended-upgrades
 
-PACKAGES install STRETCH64
+PACKAGES install STRETCH
 apt-transport-https
 
 PACKAGES install AMD64
