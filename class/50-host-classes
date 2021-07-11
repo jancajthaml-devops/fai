@@ -6,7 +6,7 @@
 case $HOSTNAME in
 
     *)
-	echo "BASE STRETCH STRETCH64 LVM" ;;
+	echo "BASE STRETCH STRETCH64" ;;
 
 esac
 
