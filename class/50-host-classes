@@ -6,7 +6,7 @@
 case $HOSTNAME in
 
     demohost)
-	echo "BASE STRETCH" ;;
+	echo "BASE STRETCH STRETCH64" ;;
 
     *)
 	exit 1 ;;
