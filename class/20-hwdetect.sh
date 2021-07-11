@@ -15,7 +15,7 @@ case $(uname -r) in
     [3456]*) kernelmodules="$kernelmodules mptspi dm-mod md-mod aes dm-crypt" ;;
 esac
 
-for mod in $kernelmodules; do
+for mod in $kernelmodules ; do
     [ X$verbose = X1 ] && echo Loading kernel module $mod
     modprobe -a $mod 1>/dev/null 2>&1
 done
@@ -27,7 +27,7 @@ echo $printk > /proc/sys/kernel/printk
 
 odisklist=$disklist
 set_disk_info  # recalculate list of available disks
-if [ "$disklist" != "$odisklist" ]; then
+if [ "$disklist" != "$odisklist" ] ; then
     echo New disklist: $disklist
     echo disklist=\"$disklist\" >> $LOGDIR/additional.var
 fi
