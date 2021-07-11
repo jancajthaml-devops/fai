@@ -23,3 +23,5 @@ linux-image-amd64
 
 PACKAGES install GRUB_PC
 grub-pc
+efibootmgr
+grub-efi-amd64-bin
