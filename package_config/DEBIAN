@@ -67,6 +67,3 @@ task-cinnamon-desktop
 PACKAGES install WEBSERVER
 task-web-server
 
-PACKAGES install-norec SSH_SERVER
-openssh-server
-
