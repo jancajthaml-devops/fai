@@ -21,7 +21,8 @@ apt-transport-https
 PACKAGES install-norec AMD64
 linux-image-amd64
 
+PACKAGES install-norec ARM64
+linux-image-arm64
+
 PACKAGES install-norec GRUB_PC
 grub-pc
-efibootmgr
-grub-efi-amd64-bin
