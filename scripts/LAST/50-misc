@@ -65,16 +65,16 @@ setrel() {
 
     # if release is not set, try to determine it
 
-    if [ -n "$release" ]; then
-	return
+    if [ -n "$release" ] ; then
+	   return
     fi
-    if [ ! -f $target/etc/os-release ]; then
-	return
+    if [ ! -f $target/etc/os-release ] ; then
+	   return
     fi
 
     dists="jessie stretch buster bullseye bookworm trixie focal bionic xenial trusty"
-    for d in $dists; do
-	if grep -iq $d $target/etc/os-release; then
+    for d in $dists ; do
+	if grep -iq $d $target/etc/os-release ; then
 	    release=$d
 	    break
 	fi
