@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# Disable TTY screensaver
-export TERM=linux
-setterm -blank 0

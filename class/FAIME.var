@@ -1,0 +1,10 @@
+KEYMAP=us
+TIMEZONE=UTC
+ROOTPW=''
+username=debian
+USERPW='$6$nJIK00th$3gL6VONmWCYVjPLzPxjpRGRXVHXl6MVKwAveLYLZSXAjb8.XF74aRVnYk0TemcLZiDRRQzv5.drQlpnAstgpN1'
+release=buster
+secsuite=buster/updates
+bpo=
+postinst=
+rclocal=

@@ -1,0 +1,7 @@
+# These lines should work for many sites
+
+deb http://mirror.netcologne.de/debian buster main contrib non-free
+deb http://mirror.netcologne.de/debian-security buster/updates main contrib non-free
+
+# repository that may contain newer fai packages for buster
+deb [trusted=yes] http://fai-project.org/download buster koeln
