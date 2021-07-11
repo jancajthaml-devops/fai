@@ -1,2 +1,5 @@
 # Linux command line:
-grub-pc grub2/linux_cmdline_default     string elevator=noop quiet
+grub-pc grub-pc/hidden_timeout boolean false
+grub-pc grub-pc/timeout string 5
+grub-pc grub2/linux_cmdline_default string BOOTIF=00:00:00:00:00:00 --verbose 2
+
