@@ -15,13 +15,6 @@ console-setup kbd
 pciutils usbutils
 unattended-upgrades
 
-PACKAGES install I386
-linux-image-686-pae
-
-PACKAGES install CHROOT
-linux-image-686-pae-
-linux-image-amd64-
-
 PACKAGES install AMD64
 linux-image-amd64
 
@@ -34,9 +27,6 @@ grub-pc
 
 PACKAGES install GRUB_EFI
 grub-efi
-
-PACKAGES install LVM
-lvm2
 
 PACKAGES install CLOUD
 unattended-upgrades
