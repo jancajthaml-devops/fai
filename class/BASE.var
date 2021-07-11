@@ -13,5 +13,5 @@ STOP_ON_ERROR=700
 
 FAI_RAMDISKS="$target/var/lib/dpkg $target/var/cache/apt"
 
-debug=1
-verbose=1
+debug=0
+verbose=0
