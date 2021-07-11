@@ -80,7 +80,7 @@ newnicnames
 case "$FAI_ACTION" in
   install|dirinstall)
     ifclass DHCPC && METHOD=dhcp || METHOD=static
-    ifclass XORG && RENDERER=NetworkManager || RENDERER=networkd
+    RENDERER=networkd
 
     if [ -d $target/etc/netplan ]; then
         # Ubuntu >= 17.10 with netplan.io
