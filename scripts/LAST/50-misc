@@ -7,7 +7,7 @@ error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
 # remove backup files from cfengine, but only if cfengine is installed
 if [ -x /usr/sbin/cfagent ] || [ -x $target/usr/sbin/cfagent ] ; then
     dirs="root etc var"
-    for path in $dirs; do
+    for path in $dirs ; do
         find $target/$path -maxdepth 20 -name \*.cfedited -o -name \*.cfsaved | xargs -r rm
     done
 fi
@@ -25,7 +25,7 @@ fi
 echo "Running \"apt-get -f install\" for the last time."
 $ROOTCMD apt-get -f install
 
-if [ $FAI_ACTION = "install" ]; then
+if [ $FAI_ACTION = "install" ] ; then
     lskernels=$(echo $target/boot/vmlinu*)
     [ -f ${lskernels%% *} ] || echo "ERROR: No kernel was installed. Have a look at shell.log" >&2
 fi

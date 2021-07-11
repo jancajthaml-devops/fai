@@ -1,11 +1,11 @@
 PACKAGES install-norec
-apt-transport-https # is only needed for stretch
 debconf-utils
 file
 less
 linuxlogo
 rsync
-openssh-client openssh-server
+openssh-client
+openssh-server
 time
 procinfo
 nullmailer
@@ -14,6 +14,9 @@ locales
 console-setup kbd
 pciutils usbutils
 unattended-upgrades
+
+PACKAGES install STRETCH64
+apt-transport-https
 
 PACKAGES install AMD64
 linux-image-amd64
