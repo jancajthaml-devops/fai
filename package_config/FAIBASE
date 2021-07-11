@@ -20,7 +20,6 @@ apt-transport-https
 
 PACKAGES install AMD64
 linux-image-amd64
-memtest86+
 
 PACKAGES install GRUB_PC
 grub-pc
