@@ -1,7 +1,7 @@
-disk_config disk1 disklabel:msdos bootable:1 fstabkey:uuid
 
-primary /      2G-8G    ext4  rw,noatime,errors=remount-ro
-logical swap   200-1000 swap  sw
-logical /var   600-1300 ext4  rw,noatime         createopts="-L var -m 5" tuneopts="-c 0 -i 0"
-logical /tmp   100-1G   ext4  rw,noatime,nosuid,nodev createopts="-L tmp -m 0" tuneopts="-c 0 -i 0"
-logical /home  100-50%  ext4  rw,noatime,nosuid,nodev createopts="-L home -m 1" tuneopts="-c 0 -i 0"
+disk_config disk1 disklabel:gpt bootable:1 fstabkey:uuid
+
+primary /boot/efi 512M  vfat  rw
+primary /      2G-50G   ext4  rw,noatime,errors=remount-ro
+primary swap   200-10G  swap  sw
+primary /home  100-     ext4  rw,noatime,nosuid,nodev createopts="-L home -m 1" tuneopts="-c 0 -i 0"
