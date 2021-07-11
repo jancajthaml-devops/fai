@@ -11,5 +11,7 @@ LOGREMOTEDIR=/var/log/fai
 
 STOP_ON_ERROR=700
 
-# Uncomment to debug
-#debug=1
+FAI_RAMDISKS="$target/var/lib/dpkg $target/var/cache/apt"
+
+debug=1
+verbose=1

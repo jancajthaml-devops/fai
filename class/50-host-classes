@@ -5,11 +5,9 @@
 # use a list of classes for our demo machine
 case $HOSTNAME in
 
-    demohost)
+    *)
 	echo "BASE STRETCH STRETCH64" ;;
 
-    *)
-	exit 1 ;;
 esac
 
 (ifclass I386 || ifclass AMD64) && echo GRUB_PC

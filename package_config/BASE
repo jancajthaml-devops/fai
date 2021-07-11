@@ -15,13 +15,13 @@ console-setup kbd
 pciutils usbutils
 unattended-upgrades
 
-PACKAGES install STRETCH
+PACKAGES install-norec STRETCH
 apt-transport-https
 
-PACKAGES install AMD64
+PACKAGES install-norec AMD64
 linux-image-amd64
 
-PACKAGES install GRUB_PC
+PACKAGES install-norec GRUB_PC
 grub-pc
 efibootmgr
 grub-efi-amd64-bin
