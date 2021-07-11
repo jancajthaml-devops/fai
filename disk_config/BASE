@@ -1,4 +1,3 @@
-
 disk_config disk1 disklabel:gpt bootable:1 fstabkey:uuid
 
 primary /boot/efi 512M  vfat  rw

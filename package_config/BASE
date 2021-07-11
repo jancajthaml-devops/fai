@@ -24,5 +24,11 @@ linux-image-amd64
 PACKAGES install-norec ARM64
 linux-image-arm64
 
-PACKAGES install-norec GRUB_PC
+PACKAGES install GRUB_PC
 grub-pc
+
+PACKAGES install GRUB_EFI
+grub-efi
+
+PACKAGES install LVM
+lvm2
