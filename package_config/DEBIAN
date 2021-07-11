@@ -17,7 +17,6 @@ unattended-upgrades
 
 PACKAGES install I386
 linux-image-686-pae
-memtest86+
 
 PACKAGES install CHROOT
 linux-image-686-pae-
@@ -25,7 +24,6 @@ linux-image-amd64-
 
 PACKAGES install AMD64
 linux-image-amd64
-memtest86+
 
 PACKAGES install ARM64
 grub-efi-arm64
@@ -42,28 +40,3 @@ lvm2
 
 PACKAGES install CLOUD
 unattended-upgrades
-
-PACKAGES install XFCE
-task-xfce-desktop task-desktop
-
-PACKAGES install GNOME
-task-gnome-desktop
-
-PACKAGES install KDE
-task-kde-desktop
-
-PACKAGES install LXDE
-task-lxde-desktop
-
-PACKAGES install LXQT
-task-lxqt-desktop
-
-PACKAGES install MATE
-task-mate-desktop
-
-PACKAGES install CINNAMON
-task-cinnamon-desktop
-
-PACKAGES install WEBSERVER
-task-web-server
-
