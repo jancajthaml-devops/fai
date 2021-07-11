@@ -93,9 +93,6 @@ EOF
     if [ -f $target/var/lib/dpkg/info/fai-server.list ]; then
 	sed -i -e '/fai-project.org/s/^#//' $target/etc/apt/sources.list
     fi
-    if ifclass BACKPORTS; then
-	ainsl /etc/apt/sources.list "deb $apt_cdn/debian $release-backports main contrib non-free"
-    fi
 fi
 ainsl /etc/apt/sources.list "$repo"
 

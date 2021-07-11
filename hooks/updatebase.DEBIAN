@@ -27,6 +27,3 @@ EOF
 fi
 
 ainsl /etc/apt/sources.list "$repo"
-if ifclass BACKPORTS; then
-    ainsl -v /etc/apt/sources.list "^deb $apt_cdn/debian $release-backports main contrib non-free"
-fi
