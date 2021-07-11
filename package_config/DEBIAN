@@ -25,8 +25,5 @@ linux-image-arm64
 PACKAGES install GRUB_PC
 grub-pc
 
-PACKAGES install GRUB_EFI
-grub-efi
-
 PACKAGES install CLOUD
 unattended-upgrades

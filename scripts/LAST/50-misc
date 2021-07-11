@@ -9,7 +9,7 @@ if [ "$FAI_ACTION" = "dirinstall" -o $do_init_tasks -eq 0 ] ; then
 else
   # check if mdadm has been forgotten
   if grep -q active /proc/mdstat 2>/dev/null; then
-    if [ ! -d $target/etc/mdadm ]; then
+    if [ ! -d $target/etc/mdadm ] ; then
 	echo ERROR: Found Software RAID, but the mdadm package was not installed
 	error=1
     fi
@@ -41,7 +41,7 @@ if [ $do_init_tasks -eq 1 ] ; then
        no|"") hwopt="--localtime" ;;
        yes)   hwopt="--utc"       ;;
     esac
-    hwclock $hwopt --systohc || true
+    hwclock $hwopt --systohc || :
 fi
 
 # Make sure everything is configured properly

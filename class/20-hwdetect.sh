@@ -21,7 +21,7 @@ for mod in $kernelmodules ; do
 done
 
 # show the basic information about the network interface
-ip -br li show up|egrep -v ^lo; ip -br a show up|egrep -v ^lo
+ip -br li show up | egrep -v ^lo; ip -br a show up | egrep -v ^lo
 
 echo $printk > /proc/sys/kernel/printk
 

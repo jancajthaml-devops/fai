@@ -5,7 +5,7 @@
 # (c) 2015 by Thomas Lange, lange@informatik.uni-koeln.de
 # Universitaet zu Koeln
 
-if [ X$FAI_ACTION = Xinstall -o X$FAI_ACTION = Xdirinstall -o X$FAI_ACTION = X ]; then
+if [ X$FAI_ACTION = Xinstall -o X$FAI_ACTION = Xdirinstall -o X$FAI_ACTION = X ] ; then
     :
 else
     return 0
@@ -118,21 +118,21 @@ prtresult() {
 # read all files with name matching *.profile 
 _parsed=0
 shopt -s nullglob
-for _f in *.profile; do
+for _f in *.profile ; do
     parse_profile $_f
     _parsed=1
 done
 unset _f
 
 # do nothing if no profile was read
-if [ $_parsed -eq 0 ]; then
+if [ $_parsed -eq 0 ] ; then
     unset _parsed
     return 0
 fi
 
 # create the argument list containing the menu entries
 # and the help text file
-for i in "${list[@]}"; do
+for i in "${list[@]}" ; do
     par+=("$i")
     par+=("${ardesc[${i}]}")
     par+=("${arshort[${i}]}")
@@ -147,7 +147,7 @@ while true; do
     dialog --clear --item-help --title "FAI - Fully Automatic Installation" --help-button \
 	--default-item "$default" \
 	--menu "\nSelect your FAI profile\n\nThe profile will define a list of classes,\nwhich are used by FAI.\n\n\n"\
-	15 70 0 "${par[@]}" 2> $tempfile  1> $out
+	15 70 0 "${par[@]}" 2> $tempfile 1> $out
 
     _retval=$?
     case $_retval in
