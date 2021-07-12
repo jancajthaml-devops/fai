@@ -2,4 +2,6 @@
 
 echo "disklist=sda ... $disklist"
 
+ls -la /dev
+
 dd if=/dev/zero of=/dev/sda bs=1024 count=1
