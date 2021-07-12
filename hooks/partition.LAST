@@ -2,13 +2,11 @@
 
 echo "Stopping VGs:"
 vgs 
-vgchange -an $vg
+vgchange -a -n
 
 # stop MD RAID arrays
 echo "Stopping and removing MD RAID arrays:"
-mdadm --detail --scan 
-
-/sbin/wipepefs -af /dev/sda
+mdadm --detail --scan
 
 echo "A"
 
