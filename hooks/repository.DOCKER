@@ -1,3 +1,0 @@
-#!/bin/bash
-
-fcopy -Bi /usr/share/keyrings/docker-archive-keyring.gpg
