@@ -1,0 +1,5 @@
+PACKAGES install-norec
+docker-ce
+
+PACKAGES install-norec OS-64
+cgroupfs-mount
