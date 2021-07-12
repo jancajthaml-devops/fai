@@ -1,6 +1,10 @@
 #! /bin/bash
 
+echo "FOO"
+
 [ "$cmdlineclasses" ] || exit 0
+
+echo "BAR"
 
 echo $cmdlineclasses
 
