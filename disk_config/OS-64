@@ -1,10 +1,10 @@
 disk_config disk1 disklabel:msdos bootable:1 fstabkey:uuid align-at:1M
 
-primary		/boot	100M	ext2	rw
-primary		-		2G		-		-
-primary		/		0-		ext3	rw,relatime,errors=remount-ro createopts="-L ROOT -m 5" tuneopts="-c 0 -i 0"
+primary		/boot	100M	ext3	rw
+primary		swap	2048	swap	sw
+primary		-		100-	-		-
+
 
 disk_config lvm
-vg vg_os	disk1.2
-
-vg_os-var   /os/var   1G	ext4	defaults
+vg vg_os	sda3
+vg_os-var   /os/var   100-	ext4	rw createops="-m 2 -L data"
