@@ -21,8 +21,6 @@ KEYMAP=us-latin1
 
 MODULESLIST="usbhid megaraid_sas"
 
-USE_SETUP_STORAGE=1
-
 LANGUAGE=en_US
 LC_ALL=C
 LANG=en_US
