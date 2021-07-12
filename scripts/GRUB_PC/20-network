@@ -1,0 +1,7 @@
+#!/bin/bash
+
+error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
+
+fcopy -M /etc/default/grub.d/10_disable_net.ifnames.cfg
+
+$ROOTCMD update-grub

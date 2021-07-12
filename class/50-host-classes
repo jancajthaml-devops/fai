@@ -1,0 +1,7 @@
+#! /bin/bash
+
+ifclass DEBIAN && echo "DHCPC OS-64 BUSTER64"
+
+(ifclass I386 || ifclass AMD64) && echo GRUB_PC
+
+exit 0

@@ -1,0 +1,12 @@
+PACKAGES install-norec
+rsync
+time
+locales
+grub-pc
+openssh-server
+
+PACKAGES install-norec AMD64
+linux-image-amd64
+
+PACKAGES install-norec ARM64
+linux-image-arm64
