@@ -4,7 +4,7 @@ primary		/boot	100M	ext3	rw
 primary		swap	2048	swap	sw
 primary		-		100-	-		-
 
-
 disk_config lvm
+
 vg vg_os	sda3
 vg_os-var   /os/var   100-	ext4	rw createops="-m 2 -L data"
