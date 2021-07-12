@@ -46,26 +46,26 @@ INCLUDE_DEBIAN=
 setarch() {
 
     l32=
-    if [ X$1 = Xi386 ]; then
+    if [ X$1 = Xi386 ] ; then
         l32=linux32
     fi
 }
 
 check() {
 
-    if [ $(id -u) != 0 ]; then
+    if [ $(id -u) != 0 ] ; then
         echo "You must be root to create chroots."
         exit 1
     fi
     mknod $xtmp/test-dev-null c 1 3
-    if [ $? -eq 1 ]; then
+    if [ $? -eq 1 ] ; then
         echo "Cannot create device files on $xtmp, aborting."
         echo "Perhaps this directory is mounted with option nodev."
         rm -rf $xtmp
         exit 1
     fi
     echo test > $xtmp/test-dev-null
-    if [ $? -eq 1 ]; then
+    if [ $? -eq 1 ] ; then
         echo "Cannot create device files on $xtmp, aborting."
         echo "Perhaps this directory is mounted with option nodev."
         rm -rf $xtmp
@@ -124,7 +124,7 @@ cleanup-rinse() {
     chroot $xtmp rpm -qa|wc -l
 
     rm -f $xtmp/etc/resolv.conf $xtmp/post
-    if [ -d $xtmp/etc/yum.repos.d/orig ]; then
+    if [ -d $xtmp/etc/yum.repos.d/orig ] ; then
         mv $xtmp/etc/yum.repos.d/orig/* $xtmp/etc/yum.repos.d/
         rm -rf $xtmp/etc/yum.repos.d/orig
     fi
@@ -181,18 +181,19 @@ debgeneric() {
     dist=${dist,,}
 
     check
-    if [ -n "$INCLUDE_DEBIAN" ]; then
-	local inc="--include=$INCLUDE_DEBIAN"
+
+    if [ -n "$INCLUDE_DEBIAN" ] ; then
+	   local inc="--include=$INCLUDE_DEBIAN"
     fi
 
-    if [ -n "$arch" ]; then
-	qemu-debootstrap --arch $arch ${exc} $inc $dist $xtmp $mirror
-	target="${target}_${arch^^}"
+    if [ -n "$arch" ] ; then
+    	qemu-debootstrap --arch $arch ${exc} $inc $dist $xtmp $mirror
+    	target="${target}_${arch^^}"
     else
-	if [[ $DIST =~ 64 ]]; then
-            arch=amd64
+	if [[ $DIST =~ 64 ]] ; then
+        arch=amd64
 	else
-            arch=i386
+        arch=i386
 	fi
 	debootstrap --arch $arch ${exc} $inc $dist $xtmp $mirror
     fi

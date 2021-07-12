@@ -8,6 +8,3 @@ linux-image-amd64
 
 PACKAGES install-norec ARM64
 linux-image-arm64
-
-PACKAGES install-norec GRUB_PC
-grub-pc

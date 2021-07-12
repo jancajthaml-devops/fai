@@ -17,6 +17,7 @@ for FILE in /bin/ping /bin/ping6 /usr/bin/fping /usr/bin/fping6 ; do
         fi
     fi
 done
+
 if [ -x $target/usr/bin/systemd-detect-virt ] ; then
     $ROOTCMD /sbin/setcap cap_dac_override,cap_sys_ptrace+ep /usr/bin/systemd-detect-virt
 fi
