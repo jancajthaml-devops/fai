@@ -20,17 +20,8 @@ for mod in $kernelmodules ; do
     modprobe -a $mod 1>/dev/null 2>&1
 done
 
-# show the basic information about the network interface
-ip -br li show up | egrep -v ^lo; ip -br a show up | egrep -v ^lo
+echo 6 > /proc/sys/kernel/printk
 
-echo $printk > /proc/sys/kernel/printk
-
-odisklist=$disklist
 set_disk_info  # recalculate list of available disks
-if [ "$disklist" != "$odisklist" ] ; then
-    echo New disklist: $disklist
-    echo disklist=\"$disklist\" >> $LOGDIR/additional.var
-fi
-
 save_dmesg     # save new boot messages (from loading modules)
 
