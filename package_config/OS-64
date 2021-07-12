@@ -2,6 +2,7 @@ PACKAGES install-norec
 rsync
 time
 locales
+grub-pc
 
 PACKAGES install-norec AMD64
 linux-image-amd64
