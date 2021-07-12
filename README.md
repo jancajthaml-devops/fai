@@ -1,0 +1,3 @@
+# fai
+
+fully automatic intallation
