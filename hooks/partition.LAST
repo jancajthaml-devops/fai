@@ -4,6 +4,8 @@ echo "Stopping VGs:"
 vgs 
 vgchange -an $vg
 
+ls -la /dev
+
 # stop MD RAID arrays
 echo "Stopping and removing MD RAID arrays:"
 mdadm --detail --scan
