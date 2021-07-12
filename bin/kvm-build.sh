@@ -1,3 +1,5 @@
+#! /bin/bash
+
 name="$1"
 
 if [ -z $name ] ; then
@@ -11,12 +13,12 @@ if [ -z $classes ] ; then
 	classes="DEBIAN,AMD64"
 fi
 
-fai-diskimage -Nvu $name -S5G -c$classes /opt/fai/$name.vdi
-
 if [ -f /var/lib/libvirt/images/$name.qcow2 ] ; then
   echo "$name already exists in kvm"
   exit 2;
 fi
+
+fai-diskimage -Nvu $name -S5G -c$classes /opt/fai/$name.vdi
 
 qemu-img convert -f vdi -O qcow2 /opt/fai/$name.vdi /var/lib/libvirt/images/$name.qcow2
 
@@ -32,3 +34,5 @@ virt-install \
 	--vnc \
 	--noautoconsole \
 	--import
+
+rm -f /opt/fai/$name.vdi
