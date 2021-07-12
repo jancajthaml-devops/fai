@@ -18,6 +18,7 @@ vgchange -an $vg
 # stop MD RAID arrays
 echo "Stopping and removing MD RAID arrays:"
 mdadm --detail --scan 
+
 for array in $(mdadm --detail --scan | cut -d ' ' -f 2)
 do
   array=$(readlink -f $array)
