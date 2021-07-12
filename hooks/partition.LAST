@@ -19,8 +19,7 @@ vgchange -an $vg
 echo "Stopping and removing MD RAID arrays:"
 mdadm --detail --scan 
 
-for array in $(mdadm --detail --scan | cut -d ' ' -f 2)
-do
+for array in $(mdadm --detail --scan | cut -d ' ' -f 2) ; do
   array=$(readlink -f $array)
   parts=$(mdadm --detail  $array | grep '/dev/' | grep -oE "[^ :]+$")
   mdadm --stop $array
