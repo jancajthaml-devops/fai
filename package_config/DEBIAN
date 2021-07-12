@@ -1,16 +1,10 @@
 PACKAGES install-norec
 apt-transport-https # is only needed for stretch
-debconf-utils
-file
-less
 rsync
-openssh-client
 time
 procinfo
 eject
 locales
-console-setup
-kbd
 
 PACKAGES install-norec AMD64
 linux-image-amd64

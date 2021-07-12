@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Fix auto-read-only arrays
+for md in $(fgrep '(auto-read-only)' /proc/mdstat | awk -F: '{ print $1 }') ; do
+	mdadm --readwrite /dev/$md
+done
