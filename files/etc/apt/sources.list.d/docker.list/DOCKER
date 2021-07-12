@@ -1,2 +1,3 @@
-deb https://download.docker.com/linux/debian buster stable
-deb-src https://download.docker.com/linux/debian buster stable
+deb [signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian buster stable
+deb-src [signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian buster stable
+
