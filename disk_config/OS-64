@@ -7,4 +7,4 @@ primary -		100-	-		-
 
 disk_config lvm
 vg vg_os	sda4
-vg_os-_var	/os/var		0-	ext4	rw createopts="-m 2 -L data"
+vg_os-var	/os/var		0-	ext4	rw,relatime,errors=remount-ro createopts="-L ROOT" tuneopts="-c 0 -i 0"
