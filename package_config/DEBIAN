@@ -1,29 +1,26 @@
 PACKAGES install-norec
 apt-transport-https # is only needed for stretch
-sudo
 debconf-utils
 file
 less
 linuxlogo
 rsync
 openssh-client
+hardening-check
 time
 procinfo
 eject
 locales
-console-setup kbd
-pciutils usbutils
-unattended-upgrades
+console-setup
+kbd
+pciutils
+usbutils
 
-PACKAGES install AMD64
+PACKAGES install-norec AMD64
 linux-image-amd64
 
-PACKAGES install ARM64
-grub-efi-arm64
+PACKAGES install-norec ARM64
 linux-image-arm64
 
-PACKAGES install GRUB_PC
+PACKAGES install-norec GRUB_PC
 grub-pc
-
-PACKAGES install CLOUD
-unattended-upgrades
