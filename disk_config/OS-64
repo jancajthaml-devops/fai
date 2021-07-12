@@ -7,5 +7,4 @@ primary		/		0-		ext3	rw,relatime,errors=remount-ro createopts="-L ROOT -m 5" tun
 disk_config lvm
 vg vg_os	disk1.2
 
-vg_os-root  /      	  2G	ext4	errors=remount-ro
 vg_os-var   /os/var   1G	ext4	defaults
