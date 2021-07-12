@@ -25,6 +25,8 @@ fi
 
 $ROOTCMD apt-get $aptopt update
 
+$ROOTCMD apt-get -y install ca-certificates
+
 $ROOTCMD apt-get remove -y \
     vim-tiny- \
     vim-common- \

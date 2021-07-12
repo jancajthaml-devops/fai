@@ -1,0 +1,7 @@
+PACKAGES install-norec
+containerd.io
+
+PACKAGES install-norec OS-64
+docker-ce=5:20.10.1~3-0~debian-buster
+docker-ce-cli=5:20.10.1~3-0~debian-buster
+cgroupfs-mount

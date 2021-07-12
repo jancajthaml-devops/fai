@@ -1,0 +1,4 @@
+
+DOCKERD="/usr/bin/dockerd"
+
+DOCKER_OPTS="-H tcp://0.0.0.0:2376"

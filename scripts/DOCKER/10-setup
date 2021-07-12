@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# This script will load Docker images at next boot
+
+fcopy -M /etc/default/docker
