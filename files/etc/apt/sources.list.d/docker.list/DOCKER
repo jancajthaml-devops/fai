@@ -1,1 +1,2 @@
 deb http://download.docker.com/linux/debian buster stable
+deb-src http://download.docker.com/linux/debian buster stable
