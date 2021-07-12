@@ -28,6 +28,4 @@ $ROOTCMD apt-get $aptopt update
 $ROOTCMD apt-get remove -y \
     vim-tiny- \
     vim-common- \
-    ncurses-bin- \
-    ncurses-base- \
     tasksel-
