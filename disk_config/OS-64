@@ -1,10 +1,10 @@
 disk_config disk1 disklabel:msdos bootable:1 fstabkey:uuid align-at:1M
 
 primary		/boot	100M	ext2	rw
-primary		-		0-		-		-
+primary		-		2G		-		-
 
 disk_config lvm
 vg vg_os	disk1.2
 
-vg_os-root  /      	  1G	ext4	errors=remount-ro
+vg_os-root  /      	  2G	ext4	errors=remount-ro
 vg_os-var   /os/var   1G	ext4	defaults
