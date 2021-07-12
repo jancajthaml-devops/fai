@@ -6,6 +6,6 @@ security_cdn=http://security.debian.org
 CONSOLEFONT=
 KEYMAP=us-latin1
 
-MODULESLIST="usbhid"
+MODULESLIST="usbhid megaraid_sas"
 
 FAI_RAMDISKS="$target/var/lib/dpkg $target/var/cache"
