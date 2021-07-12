@@ -16,6 +16,8 @@ echo "B"
 
 sgdisk -z -o -g -a 2048 /dev/sda
 
+partprobe
+
 echo "C"
 
 sgdisk \
