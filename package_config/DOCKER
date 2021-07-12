@@ -1,6 +1,4 @@
 PACKAGES install-norec
-apt-transport-https
-ca-certificates
 docker-ce
 
 PACKAGES install-norec OS-64
