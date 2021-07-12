@@ -1,8 +1,6 @@
 PACKAGES install-norec
-apt-transport-https # is only needed for stretch
 rsync
 time
-procinfo
 eject
 locales
 

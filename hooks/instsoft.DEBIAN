@@ -12,9 +12,6 @@ if [ -f $target/usr/sbin/locale-gen ] ; then
     exit
 fi
 
-# uninstall non essential packages
-#$ROOTCMD dpkg-query -Wf '${Package;-40}${Essential}\n' | grep yes
-
 install_packages -l 2>/dev/null | egrep  -q  ' locales|locales '
 if [ $? -eq 0 ] ; then
     if [ X$verbose = X1 ] ; then
