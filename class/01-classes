@@ -2,7 +2,10 @@
 
 [ "$cmdlineclasses" ] || exit 0
 
-# define the classes given on the cmdline (using -c) very early
 echo $cmdlineclasses
+
+ifclass DEBIAN && echo "FAIBASE DHCPC BUSTER64"
+
+(ifclass I386 || ifclass AMD64) && echo GRUB_PC
 
 exit 0
