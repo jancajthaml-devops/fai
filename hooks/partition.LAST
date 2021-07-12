@@ -4,10 +4,17 @@
 
 echo "A"
 
-parted -s /dev/sda
+parted -s /dev/sda1 mklabel msdos
+parted -s /dev/sda2 mklabel msdos
+parted -s /dev/sda3 mklabel msdos
+parted -s /dev/sda4 mklabel msdos
+parted -s /dev/sda5 mklabel msdos
+parted -s /dev/sda6 mklabel msdos
+
+echo "B"
 
 parted /dev/sda print
 
-echo "B"
+echo "C"
 
 dd if=/dev/zero of=/dev/sda bs=1024 count=1
