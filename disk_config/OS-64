@@ -7,4 +7,5 @@ primary		-		100-	-		-
 disk_config lvm
 
 vg vg_os	disk1.2
-vg_os-var   /os/var   100-	ext4	rw createops="-m 2 -L data"
+
+vg_os-_var  /os/var   100-	ext4	rw createops="-m 2 -L data"
