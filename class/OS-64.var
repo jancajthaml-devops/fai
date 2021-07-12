@@ -15,11 +15,10 @@ STOP_ON_ERROR=700
 
 MAXPACKAGES=1000
 
-disklist=sda
 CONSOLEFONT=
 KEYMAP=us-latin1
 
-MODULESLIST="usbhid megaraid_sas"
+MODULESLIST="usbhid"
 
 LANGUAGE=en_US
 LC_ALL=C
