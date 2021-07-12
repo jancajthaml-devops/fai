@@ -27,7 +27,7 @@ mkfs.fat -F32 /dev/sda6
 
 echo "E"
 
-pvcreate --ff -y /dev/sda4
+pvcreate -ff -y /dev/sda4
 vgcreate vg_os /dev/sda4
 vgchange -a y vg_os
 lvcreate -W y -y -n _var -1100%free vg_os
