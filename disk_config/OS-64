@@ -1,10 +1,20 @@
-disk_config disk1 disklabel:msdos bootable:1 fstabkey:uuid align-at:1M
+disk_config disk1 disklabel:msdos bootable:1 fstabkey:uuid
+primary -      2G        -     -
+logical -      6G-     -     -
 
-primary	/boot	50M		ext2	rw
-primary	-		3G		-		-
-primary	/		0-		ext3	rw,relatime,errors=remount-ro createopts="-L ROOT -m 5" tuneopts="-c 0 -i 0"
+disk_config disk2 disklabel:msdos bootable:1 fstabkey:uuid
+primary -      2G        -     -
+logical -      6G-     -     -
+
+disk_config raid
+raid1   /boot  disk1.1,disk2.1 ext2 rw,noatime
+raid1   -      disk1.2,disk2.2 -    -
+
+disk_config cryptsetup
+luks - /dev/md1 - -
 
 disk_config lvm
-vg os		sda3
-os-var		/os/var 	100- 	ext3 	rw,noatime,nosuid createopts="-m 2 -L data"
-
+vg Base md1
+Base-Swap   swap   8G    swap sw
+Base-Root   /      4G   ext4 rw,noatime
+Base-Home   /home  1G-  ext4 rw,noatime
