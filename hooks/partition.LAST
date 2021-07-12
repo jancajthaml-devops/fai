@@ -1,7 +1,11 @@
 #!/bin/bash
 
-echo "disklist=sda ... $disklist"
+#parted -s /dev/sda rm
 
-ls -la /dev
+echo "A"
+
+parted /dev/sda print
+
+echo "B"
 
 dd if=/dev/zero of=/dev/sda bs=1024 count=1
