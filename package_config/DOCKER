@@ -1,4 +1,5 @@
 PACKAGES install-norec
+ca-certificates
 docker-ce
 
 PACKAGES install-norec OS-64
