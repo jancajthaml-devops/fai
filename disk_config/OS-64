@@ -6,6 +6,6 @@ primary		/		0-		ext4	rw,relatime,errors=remount-ro createopts="-L ROOT -m 5" tun
 
 disk_config lvm
 
-vg os		disk1.3
+vg os		disk1.2
 os-var		/os/var 	100- 	ext4 	rw,noatime,nosuid createopts="-m 2 -L data"
 
