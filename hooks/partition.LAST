@@ -1,54 +1,48 @@
 #!/bin/bash
+#
+# hooks/partition.WIPEDISKS
+#
+# author : W. Walkowiak, 2013-01-03
+# changed: Ricardo Branco
+#
+# Stop LVM an MD RAIDs if existing and wipe all disks with wipefs and dd
+#
+# $Id: $
+#===========================================================================
 
+# stop volume groups
 echo "Stopping VGs:"
 vgs 
 vgchange -an $vg
 
-ls -la /dev
-
 # stop MD RAID arrays
 echo "Stopping and removing MD RAID arrays:"
-mdadm --detail --scan
+mdadm --detail --scan 
+for array in $(mdadm --detail --scan | cut -d ' ' -f 2)
+do
+  array=$(readlink -f $array)
+  parts=$(mdadm --detail  $array | grep '/dev/' | grep -oE "[^ :]+$")
+  mdadm --stop $array
+  [ -x $array ] && mdadm --remove $array
+  for part in $parts; do
+    echo "zeroing $part"
+    mdadm --zero-superblock $part
+  done 
+done
+rm -f /etc/mdadm/mdadm.conf
 
-echo "A"
-
-dd if=/dev/zero of=/dev/sda bs=2048 count=1
-
-echo "B"
-
-sgdisk -z -o -g -a 2048 /dev/sda
-
-partprobe
-
-echo "C"
-
-sgdisk \
-  -a 2048 \
-  --move-second-header \
-  --new=1:0:+2000M  --typecode=1:0x8300 \
-  --new=6:0:+260M   --typecode=6:0xef00 \
-  --new=3:0:+1540M  --typecode=3:0x8200 \
-  --new=5:0:+200M   --typecode=5:0xef02 \
-  --new=4:0:0       --typecode=4:0x8e00 \
-  /dev/sda
-
-echo "D"
-
-mkfs.fat -F32 /dev/sda6
-
-echo "E"
-
-pvcreate -ff -y /dev/sda4
-vgcreate vg_os /dev/sda4
-vgchange -a y vg_os
-lvcreate -W y -y -n _var -1100%free vg_os
-
-echo "F"
-
-mkfs.ext3 -F -L primary /dev/sda1
-
-echo "H"
-
-mkfs.ext4 -F -m2 -L data /dev/vg_os/_var
-
-echo "I"
+# wipe all disks with wipefs and dd
+if [ -n "$disklist" ]; then
+  for disk in $disklist; do
+    # Skip USB devices
+    [[ $(udevadm info -q property -n $disk | sed -rne 's/^ID_BUS=//p') == "ata" ]] || continue
+    echo "Wiping boot sector of disk: $disk"
+    wipefs -a /dev/$disk
+    dd if=/dev/zero of=/dev/$disk bs=512 count=64 2>/dev/null
+    # Remove GPT signature at end of disk, too
+    dd if=/dev/zero of=/dev/$disk bs=512 count=64 seek=$(($(blockdev --getsz /dev/$disk) - 64)) 2>/dev/null
+    for part in $(ls /dev/$disk[0-9]* 2>/dev/null) ; do
+      dd if=/dev/zero of=$part bs=64K count=1 2>/dev/null
+    done
+  done
+fi
