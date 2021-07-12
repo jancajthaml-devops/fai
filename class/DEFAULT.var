@@ -1,0 +1,20 @@
+NIC1=eth0
+
+FAI_DISABLE_PACKAGE_NAME_CHECK=1
+FAI_RAMDISKS="$target/var/lib/dpkg $target/var/cache"
+FAI_ALLOW_UNSIGNED=1
+
+UTC=yes
+TIMEZONE=UTC
+
+ROOTPW='56hNVqht51tzc'
+
+STOP_ON_ERROR=700
+
+MAXPACKAGES=1000
+
+CONSOLEFONT=
+KEYMAP=us-latin1
+
+MODULESLIST="usbhid megaraid_sas"
+
