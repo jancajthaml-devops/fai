@@ -2,7 +2,7 @@
 
 echo "Stopping VGs:"
 vgs 
-vgchange -a -n
+vgchange -an $vg
 
 # stop MD RAID arrays
 echo "Stopping and removing MD RAID arrays:"
