@@ -2,8 +2,12 @@
 
 echo "A"
 
+$ROOTCMD apt-get $aptopt update
+
+echo "B"
+
 $ROOTCMD apt-get -y install \
     apt-transport-https \
     ca-certificates
 
-echo "B"
+echo "C"
