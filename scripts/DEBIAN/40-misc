@@ -29,7 +29,7 @@ elif [ -f $target/lib/systemd/system/getty@.service ]; then
 fi
 
 # make sure a machine-id exists
-if [ ! -f $target/etc/machine-id ]; then
+if [ ! -f $target/etc/machine-id ];  then
     > $target/etc/machine-id
 fi
 # recreate machine-id if the file is empty
