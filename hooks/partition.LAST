@@ -1,5 +1,9 @@
 #!/bin/bash
 
+vgchange -a n
+
+/sbin/wipepefs -af /dev/sda
+
 echo "A"
 
 dd if=/dev/zero of=/dev/sda bs=2048 count=1
@@ -13,7 +17,7 @@ echo "C"
 sgdisk \
   -a 2048 \
   --move-second-header \
-  --new=1:0:+2000M --typecode=1:0x8300 \
+  --new=1:0:+2000M  --typecode=1:0x8300 \
   --new=6:0:+260M   --typecode=6:0xef00 \
   --new=3:0:+1540M  --typecode=3:0x8200 \
   --new=5:0:+200M   --typecode=5:0xef02 \
