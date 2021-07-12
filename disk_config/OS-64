@@ -1,0 +1,10 @@
+disk_config disk1 disklabel:gpt-bios
+
+primary /		15360	ext3	rw,errors=remount-ro createopts="-L primary"
+primary /imgB	15360	ext3	rw,noauto createopts="-L secondary"
+primary swap	2048	swap	sw
+primary -		100-	-		-
+
+disk_config lvm
+vg vg_os	sda4
+vg_os-_var	/os/var		100-	ext4	rw createopts="-m 2 -L data"
