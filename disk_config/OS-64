@@ -1,6 +1,7 @@
 disk_config disk1 disklabel:gpt-bios
 
 primary /		2048	ext3	rw,errors=remount-ro createopts="-L primary"
+primary /imgB	2048	ext3	rw,noauto createopts="-L secondary"
 primary swap	2048	swap	sw
 primary -		100-	-		-
 
