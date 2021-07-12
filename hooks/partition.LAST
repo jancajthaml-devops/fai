@@ -4,6 +4,8 @@
 
 echo "A"
 
+parted /dev/sda
+
 parted /dev/sda print
 
 echo "B"
