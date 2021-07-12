@@ -7,6 +7,8 @@ dd if=/dev/zero of=/dev/sda bs=2048 count=1
 echo "B"
 
 sgdisk -z -o -g -a 2048 /dev/sda
+sleep 1
+partprobe 
 
 echo "C"
 
@@ -14,7 +16,6 @@ sgdisk \
   -a 2048 \
   --move-second-header \
   --new=:0:+20000M  --typecode=1:0x8300 \
-  --new=2:0:+20000M --typecode=2:0x8300 \
   --new=6:0:+260M   --typecode=6:0xef00 \
   --new=3:0:+1540M  --typecode=3:0x8200 \
   --new=5:0:+200M   --typecode=5:0xef02 \
@@ -35,10 +36,6 @@ lvcreate -W y -y -n _var -1100%free vg_os
 echo "F"
 
 mkfs.ext3 -F -L primary /dev/sda1
-
-echo "G"
-
-mkfs.ext3 -F -L secondary /dev/sda2
 
 echo "H"
 
