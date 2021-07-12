@@ -25,7 +25,6 @@ ip -br li show up | egrep -v ^lo; ip -br a show up | egrep -v ^lo
 
 echo $printk > /proc/sys/kernel/printk
 
-echo "XXXX ${disklist}"
 odisklist=$disklist
 set_disk_info  # recalculate list of available disks
 if [ "$disklist" != "$odisklist" ] ; then
