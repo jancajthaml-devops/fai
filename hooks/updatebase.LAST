@@ -2,6 +2,14 @@
 
 echo "A"
 
+$ROOTCMD apt-get update
+
+echo "B"
+
 $ROOTCMD apt-get -y install ca-certificates
 
 echo "C"
+
+$ROOTCMD update-ca-certificates
+
+echo "D"
