@@ -22,13 +22,13 @@ EOF
 
 sed -ie 's/Passphrase:/Passphrase: '${ROOTPW}'/' $target/registry
 
-$ROOTCMD GNUPGHOME=$target/root/.gnupg gpg --batch --generate-key registry
+$ROOTCMD gpg --batch --generate-key registry
 
-rm -f $target/registry registrye
+rm -f $target/registry $target/registrye
 
-key_id=$($ROOTCMD GNUPGHOME=$target/root/.gnupg gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
+key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
 
-$ROOTCMD GNUPGHOME=$target/root/.gnupg gpg --armor --output registry.gpg.key --export $key_id
+$ROOTCMD gpg --armor --output ./registry.gpg.key --export $key_id
 
 echo "A"
 
