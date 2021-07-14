@@ -19,7 +19,7 @@ cat >registry <<EOF
      %echo done
 EOF
 
-sed -i 's/changeid/'${ROOTPW}'/' registry
+sed -ie 's/changeid/'${ROOTPW}'/' registry
 
 $ROOTCMD gpg --batch --generate-key registry
 
