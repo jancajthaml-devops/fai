@@ -30,13 +30,11 @@ rm -f $target/registry $target/registrye
 
 key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
 
-#mkdir -p $target/var/www/repos/apt/debian
-
 ls -la $target/var/www/repos/apt/debian
 
 echo "0"
 
-ls -la $target/var/www/repos/apt/debian/distributions
+ls -la $target/var/www/repos/apt/debian/conf/distributions
 
 echo "1"
 
@@ -52,38 +50,7 @@ ls -la $target
 
 echo "C"
 
-$ROOTCMD reprepro -b $target/var/www/repos/apt/debian export
-
-#echo "G"
-
-#
-
-#
-#
-#
-#gpg --armor --output dbr.gpg.key --export 77410535536CEE1CE5386FDEBE66BE3CB723638B
-#
-#
-#
-#mkdir -p /var/www/repos/apt/debian
-#cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/debian.conf
-#
-#/usr/sbin/a2ensite debian.conf
-#
-#mkdir -p /var/www/repos/apt/debian/conf
-#
-#mkdir -p /var/www/repos/apt/Debian
-#
-#gpg --armor --output /var/www/repos/apt/Debian/dbr.gpg.key --export repository
-#
-#/var/www/repos/apt/Debian/dbr.gpg.key.
-#
-#/var/www/repos/apt/debian/conf/distributions
-#
-#/var/www/repos/apt/debian/conf/override.dbr
-#
-#reprepro --ask-passphrase export
-#
+$ROOTCMD reprepro -b $target/var/www/repos/apt/debian/conf export
 
 
 exit $error
