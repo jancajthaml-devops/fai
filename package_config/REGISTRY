@@ -1,2 +1,7 @@
+PACKAGES install-norec OS-64
+gnupg
+apache2
+reprepro
+
 PACKAGES install-norec DOCKER
 docker-registry

@@ -1,0 +1,61 @@
+#!/bin/bash
+
+#mkdir -p /var/www/repos/apt/debian
+#cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000- debian.conf
+
+temp_file=$(mktemp)
+
+cat >$temp_file <<EOF
+     %echo Generating a basic OpenPGP key
+     Key-Type: DSA
+     Key-Length: 1024
+     Subkey-Type: ELG-E
+     Subkey-Length: 1024
+     Name-Real: Registry
+     Expire-Date: 0
+     Passphrase: ${ROOTPW}
+     %commit
+     %echo done
+EOF
+
+
+cat $temp_file
+
+gpg --batch --generate-key registry
+
+rm -f $temp_file
+
+#$key_id=$(gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
+
+gpg --armor --output /var/www/repos/apt/Debian/dbr.gpg.key --export repository
+
+
+
+#reprepro export
+
+#
+#
+#
+#gpg --armor --output dbr.gpg.key --export 77410535536CEE1CE5386FDEBE66BE3CB723638B
+#
+#
+#
+#mkdir -p /var/www/repos/apt/debian
+#cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/debian.conf
+#
+#/usr/sbin/a2ensite debian.conf
+#
+#mkdir -p /var/www/repos/apt/debian/conf
+#
+#mkdir -p /var/www/repos/apt/Debian
+#
+#gpg --armor --output /var/www/repos/apt/Debian/dbr.gpg.key --export repository
+#
+#/var/www/repos/apt/Debian/dbr.gpg.key.
+#
+#/var/www/repos/apt/debian/conf/distributions
+#
+#/var/www/repos/apt/debian/conf/override.dbr
+#
+#reprepro --ask-passphrase export
+#

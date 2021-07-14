@@ -1,0 +1,31 @@
+# /etc/apache2/sites-available/debian.conf
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        <Directory /var/www/repos/ >
+        # We want the user to be able to browse the directory manually
+        # Options Indexes FollowSymLinks Multiviews
+        Order allow,deny
+        Allow from all
+        </Directory>
+
+        <Directory "/var/www/repos/apt/*/db/">
+                Order deny,allow
+                Deny from all
+        </Directory>
+
+        <Directory "/var/www/repos/apt/*/conf/">
+                Order deny,allow
+                Deny from all
+        </Directory>
+
+        <Directory "/var/www/repos/apt/*/incoming/">
+                Order allow,deny
+                Deny from all
+        </Directory>
+
+</VirtualHost>
