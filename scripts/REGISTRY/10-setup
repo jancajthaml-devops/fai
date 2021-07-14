@@ -1,13 +1,14 @@
 #!/bin/bash
 
+echo "A"
+
 #mkdir -p /var/www/repos/apt/debian
 #cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000- debian.conf
 
-gpg --list-keys
+$ROOTCMD gpg --list-keys
 
-temp_file=$(mktemp)
 
-cat >$temp_file <<EOF
+cat >registry <<EOF
      %echo Generating a basic OpenPGP key
      Key-Type: DSA
      Key-Length: 1024
@@ -20,15 +21,15 @@ cat >$temp_file <<EOF
      %echo done
 EOF
 
-sed -i 's/changeid/'${ROOTPW}'/' $temp_file
+sed -i 's/changeid/'${ROOTPW}'/' registry
 
-gpg --batch --generate-key registry
+$ROOTCMD gpg --batch --generate-key registry
 
-rm -f $temp_file
+rm -f registry
 
 #$key_id=$(gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
 
-gpg --armor --output /var/www/repos/apt/bebian/dbr.gpg.key --export repository
+$ROOTCMD gpg --armor --output $target/var/www/repos/apt/bebian/dbr.gpg.key --export repository
 
 
 #reprepro export
