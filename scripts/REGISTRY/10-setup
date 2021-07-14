@@ -19,13 +19,13 @@ EOF
 
 $ROOTCMD gpg --batch --generate-key registry
 
-$ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry
+#$ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | head -1 | cut -d':' -f5)
 
-echo "key is $sub_key"
+#echo "key is $sub_key"
 
-ls -la $target
+#ls -la $target
 
 mv $target/registry /root/.gnupg/registry
 
@@ -46,21 +46,22 @@ SignWith: ${sub_key}
 DebOverride: override.dbr
 EOF
 
-echo "0"
+#echo "0"
 
-cat $target/var/www/repos/apt/debian/conf/override.dbr
+#cat $target/var/www/repos/apt/debian/conf/override.dbr
 
-echo "1"
+#echo "1"
 
-cat $target/var/www/repos/apt/debian/conf/distributions
+#cat $target/var/www/repos/apt/debian/conf/distributions
 
-echo "2"
+#echo "2"
 
-$ROOTCMD gpg --armor --output ./registry.gpg.key --export $sub_key
-mv $target/registry.gpg.key $target/var/www/repos/apt/debian/registry.gpg.key
+$ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
+#$ROOTCMD gpg --armor --output ./registry.gpg.key --export $sub_key
+#mv $target/registry.gpg.key $target/var/www/repos/apt/debian/registry.gpg.key
 
-ls -la $target/var/www/repos/apt/debian
+#ls -la $target/var/www/repos/apt/debian
 
-$ROOTCMD reprepro -b $target/var/www/repos/apt/debian export
+$ROOTCMD reprepro -b /var/www/repos/apt/debian export
 
 exit $error
