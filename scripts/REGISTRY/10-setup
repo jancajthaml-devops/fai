@@ -3,7 +3,11 @@
 #mkdir -p /var/www/repos/apt/debian
 #cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000- debian.conf
 
+echo "A"
+
 temp_file=$(mktemp)
+
+echo "B"
 
 cat >$temp_file <<EOF
      %echo Generating a basic OpenPGP key
@@ -18,17 +22,25 @@ cat >$temp_file <<EOF
      %echo done
 EOF
 
+echo "C"
 
 cat $temp_file
 
+echo "D"
+
 gpg --batch --generate-key registry
 
+echo "E"
+
 rm -f $temp_file
+
+echo "F"
 
 #$key_id=$(gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
 
 gpg --armor --output /var/www/repos/apt/Debian/dbr.gpg.key --export repository
 
+echo "G"
 
 
 #reprepro export
