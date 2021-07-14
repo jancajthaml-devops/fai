@@ -54,7 +54,8 @@ cat $target/var/www/repos/apt/debian/conf/distributions
 
 echo "2"
 
-gpg --armor --output $target/var/www/repos/apt/debian/registry.gpg.key --export $key_id
+$ROOTCMD gpg --armor --output ./registry.gpg.key --export $key_id
+mv $target/registry.gpg.key $target/var/www/repos/apt/debian/registry.gpg.key
 
 reprepro -b $target/var/www/repos/apt/debian export
 
