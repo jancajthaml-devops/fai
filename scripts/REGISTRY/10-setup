@@ -15,13 +15,12 @@ cat >$target/registry <<EOF
      Subkey-Length: 1024
      Name-Real: Registry
      Expire-Date: 0
-     Passphrase: changeit
+     Passphrase:
      %commit
      %echo done
 EOF
 
-sed -ie 's/changeid/'${ROOTPW}'/' $target/registry
-sed -i '/^Passphrase:/s/$/ $ROOTPW/' $target/registry
+sed -i '/^Passphrase:/s/$/ '${ROOTPW}'/' $target/registry
 
 $ROOTCMD gpg --batch --generate-key registry
 
@@ -29,11 +28,9 @@ echo "A"
 
 cat $target/registry
 
-rm -f $target/registry
+rm -f $target/registry $target/registrye
 
 echo "B"
-
-cat $target/registrye
 
 key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
 
@@ -41,9 +38,15 @@ echo "C"
 
 echo $key_id
 
+echo "D"
+
+ls -la $target/var/www/repos/apt/debian
+
+echo "E"
+
 $ROOTCMD gpg --armor --output $target/var/www/repos/apt/debian/dbr.gpg.key --export $key_id
 
-echo "D"
+echo "F"
 
 
 #reprepro export
