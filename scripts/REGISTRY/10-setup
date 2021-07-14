@@ -41,7 +41,6 @@ mv $target/dbr $target/root/.gnupg/dbr
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
-# fixme with fcopy
 cat > $target/var/www/repos/apt/debian/conf/override.dbr <<EOF
 dbr Priority optional
 dbr Section net
@@ -57,7 +56,7 @@ SignWith: ${sub_key}
 DebOverride: override.dbr
 EOF
 
-$ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
+$ROOTCMD gpg --armor --output /var/www/repos/apt/debian/dbr.gpg.key --export $sub_key
 
 echo "A"
 
