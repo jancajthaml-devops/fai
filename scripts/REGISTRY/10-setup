@@ -12,7 +12,7 @@ echo "B"
 
 ls -la $target/root
 
-cat > $target/registry <<-EOF
+cat > $target/dbr <<-EOF
      %echo Generating a basic OpenPGP key
      Key-Type: DSA
      Key-Length: 1024
@@ -25,19 +25,19 @@ cat > $target/registry <<-EOF
      %echo done
 EOF
 
-$ROOTCMD gpg --batch --generate-key registry
+$ROOTCMD gpg --batch --generate-key dbr
 
-echo "key generated"
+#echo "key generated"
 
 #$ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry
 
-sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | head -1 | cut -d':' -f5)
+sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys dbr | grep sub | head -1 | cut -d':' -f5)
 
 #echo "key is $sub_key"
 
 #ls -la $target
 
-mv $target/registry $target/root/.gnupg/registry
+mv $target/dbr $target/root/.gnupg/dbr
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
@@ -59,15 +59,26 @@ EOF
 
 $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
 
-echo "key exported"
+#echo "key exported"
 
 #$ROOTCMD gpg --armor --output ./registry.gpg.key --export $sub_key
 #mv $target/registry.gpg.key $target/var/www/repos/apt/debian/registry.gpg.key
 
 #ls -la $target/var/www/repos/apt/debian
 
-ls -la $target/var/www/repos/apt/debian
+#ls -la $target/var/www/repos/apt/debian
+
+echo "A"
+
+echo ${ROOTPW} | gpg --no-use-agent -o /dev/null --local-user $sub_key -as - && :
+
+echo "B"
 
 $ROOTCMD reprepro -b /var/www/repos/apt/debian export
+
+echo "C"
+
+#PINENTRY_USER_DATA="--pinentry-mode=loopback --passphrase ${ROOTPW}" $ROOTCMD reprepro -b /var/www/repos/apt/debian export
+
 
 exit $error
