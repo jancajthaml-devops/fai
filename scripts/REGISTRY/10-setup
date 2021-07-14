@@ -25,8 +25,9 @@ sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry |
 
 echo "key is $sub_key"
 
+ls -la $target
+
 mv $target/registry /root/.gnupg/registry
-mv $target/registrye /root/.gnupg/registrye
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
