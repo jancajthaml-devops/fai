@@ -11,3 +11,6 @@ if [ -f $FAI_ROOT/etc/init/systemd-logind.conf ] ; then
 elif [ -f $FAI_ROOT/etc/init/cgroup-lite.conf ] ; then
 	sed -i '/\/bin\/cgroups-mount/a\\techo 1 > /sys/fs/cgroup/memory/memory.use_hierarchy' $FAI_ROOT/etc/init/cgroup-lite.conf
 fi
+
+# setup registry
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
