@@ -19,7 +19,7 @@ EOF
 
 $ROOTCMD gpg --batch --generate-key registry
 
-$ROOTCMD gpg --list-keys
+$ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | head -1 | cut -d':' -f5)
 
@@ -55,15 +55,11 @@ cat $target/var/www/repos/apt/debian/conf/distributions
 
 echo "2"
 
-$ROOTCMD gpg --list-keys
-
-echo "3"
-
 $ROOTCMD gpg --armor --output ./registry.gpg.key --export $sub_key
 mv $target/registry.gpg.key $target/var/www/repos/apt/debian/registry.gpg.key
 
 ls -la $target/var/www/repos/apt/debian
 
-reprepro -b $target/var/www/repos/apt/debian export
+$ROOTCMD reprepro -b $target/var/www/repos/apt/debian export
 
 exit $error
