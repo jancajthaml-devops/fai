@@ -15,7 +15,7 @@ cat >$target/var/www/repos/apt/debian/conf/distributions <<EOF
      Origin: OS-64
      Label: dbr_5.2
      Codename: dbr
-     Architectures: amd64
+     Architectures: amd64 arm64
      Components: main
      Description: OS-64 REGISTRY
      SignWith:
@@ -38,17 +38,13 @@ sed -ie 's/Passphrase:/Passphrase: '${ROOTPW}'/' $target/registry
 
 $ROOTCMD gpg --batch --generate-key registry
 
-ls -la $target
-
 rm -f $target/registry $target/registrye
 
 key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
 
-ls -la $target/var/www/repos/apt/debian
-
 echo "0"
 
-ls -la $target/var/www/repos/apt/debian/conf
+cat $target/var/www/repos/apt/debian/conf/override.dbr
 
 echo "1"
 
@@ -56,8 +52,8 @@ cat $target/var/www/repos/apt/debian/conf/distributions
 
 echo "2"
 
-$ROOTCMD gpg --armor --output $target/var/www/repos/apt/debian/registry.gpg.key --export $key_id
+gpg --armor --output $target/var/www/repos/apt/debian/registry.gpg.key --export $key_id
 
-$ROOTCMD reprepro -b $target/var/www/repos/apt/debian export
+reprepro -b $target/var/www/repos/apt/debian export
 
 exit $error
