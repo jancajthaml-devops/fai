@@ -20,9 +20,11 @@ sed -ie 's/Passphrase:/Passphrase: '${ROOTPW}'/' $target/registry
 
 $ROOTCMD gpg --batch --generate-key registry
 
-rm -f $target/registry $target/registrye
+$ROOTCMD gpg --list-keys
 
 key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
+
+rm -f $target/registry $target/registrye
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
