@@ -29,7 +29,7 @@ rm -f $target/registry
 
 #$key_id=$(gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
 
-$ROOTCMD gpg --armor --output $target/var/www/repos/apt/bebian/dbr.gpg.key --export repository
+$ROOTCMD gpg --armor --output $target/var/www/repos/apt/debian/dbr.gpg.key --export repository
 
 
 #reprepro export
