@@ -21,15 +21,9 @@ EOF
 
 $ROOTCMD gpg --batch --generate-key registry
 
-#echo "key generated"
-
 $ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | head -1 | cut -d':' -f5)
-
-echo "key is [$sub_key]"
-
-#ls -la $target
 
 mv $target/registry $target/root/.gnupg/registry
 
@@ -52,10 +46,11 @@ EOF
 
 $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
 
-echo "A"
+# cache paraphrase so next command does not need it
+echo x > $target/stub_doc
+$ROOTCMD gpg --pinentry-mode=loopback --passphrase=${ROOTPW} --output stub_doc.sig --sign stub_doc
+rm -f $target/stub_doc $target/stub_doc.sig
 
-PINENTRY_USER_DATA="--pinentry-mode=loopback --passphrase ${ROOTPW}" $ROOTCMD reprepro -b /var/www/repos/apt/debian export
-
-echo "B"
+$ROOTCMD reprepro -b /var/www/repos/apt/debian export
 
 exit $error
