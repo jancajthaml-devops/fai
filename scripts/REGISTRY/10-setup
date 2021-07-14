@@ -21,7 +21,7 @@ $ROOTCMD gpg --batch --generate-key registry
 
 $ROOTCMD gpg --list-keys
 
-sub_key=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep sub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
+sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | head -1 | cut -d':' -f5)
 
 echo "key is $sub_key"
 
