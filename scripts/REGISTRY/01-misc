@@ -1,5 +1,0 @@
-#!/bin/bash
-
-fcopy -ir /var/www/repos/apt/debian/conf/distributions
-
-fcopy -i /var/www/repos/apt/debian/conf/override.dbr
