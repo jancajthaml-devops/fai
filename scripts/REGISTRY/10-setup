@@ -20,7 +20,7 @@ cat >$target/registry <<EOF
      %echo done
 EOF
 
-sed -i '/^Passphrase:/s/$/ '${ROOTPW}'/' $target/registry
+sed -ie 's/Passphrase:/Passphrase: '${ROOTPW}'/' $target/registry
 
 $ROOTCMD gpg --batch --generate-key registry
 
