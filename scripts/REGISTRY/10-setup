@@ -1,5 +1,6 @@
 #!/bin/bash
 
+error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
 
 #mkdir -p /var/www/repos/apt/debian
 #cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000- debian.conf
@@ -58,3 +59,6 @@ $ROOTCMD gpg --armor --output $target/var/www/repos/apt/bebian/dbr.gpg.key --exp
 #
 #reprepro --ask-passphrase export
 #
+
+
+exit $error
