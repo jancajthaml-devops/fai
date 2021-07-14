@@ -59,26 +59,10 @@ EOF
 
 $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
 
-#echo "key exported"
-
-#$ROOTCMD gpg --armor --output ./registry.gpg.key --export $sub_key
-#mv $target/registry.gpg.key $target/var/www/repos/apt/debian/registry.gpg.key
-
-#ls -la $target/var/www/repos/apt/debian
-
-#ls -la $target/var/www/repos/apt/debian
-
 echo "A"
 
-echo ${ROOTPW} | gpg --no-use-agent -o /dev/null --local-user $sub_key -as - && :
+PINENTRY_USER_DATA="--pinentry-mode=loopback --passphrase ${ROOTPW}" $ROOTCMD reprepro -b /var/www/repos/apt/debian export
 
 echo "B"
-
-$ROOTCMD reprepro -b /var/www/repos/apt/debian export
-
-echo "C"
-
-#PINENTRY_USER_DATA="--pinentry-mode=loopback --passphrase ${ROOTPW}" $ROOTCMD reprepro -b /var/www/repos/apt/debian export
-
 
 exit $error
