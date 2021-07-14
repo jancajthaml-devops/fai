@@ -34,9 +34,13 @@ ls -la $target/var/www/repos/apt/debian
 
 echo "0"
 
-ls -la $target/var/www/repos/apt/debian/conf/distributions
+ls -la $target/var/www/repos/apt/debian/conf
 
 echo "1"
+
+cat $target/var/www/repos/apt/debian/conf/distributions
+
+echo "2"
 
 $ROOTCMD gpg --armor --output $target/var/www/repos/apt/debian/registry.gpg.key --export $key_id
 
