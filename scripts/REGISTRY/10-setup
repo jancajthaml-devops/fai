@@ -22,13 +22,13 @@ EOF
 
 sed -ie 's/Passphrase:/Passphrase: '${ROOTPW}'/' $target/registry
 
-$ROOTCMD gpg --batch --generate-key registry
+$ROOTCMD GNUPGHOME=$target/root/.gnupg gpg --batch --generate-key registry
 
-rm -f $target/registry $target/registrye
+rm -f $target/registry registrye
 
-key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
+key_id=$($ROOTCMD GNUPGHOME=$target/root/.gnupg gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
 
-$ROOTCMD gpg --armor --output registry.gpg.key --export $key_id
+$ROOTCMD GNUPGHOME=$target/root/.gnupg gpg --armor --output registry.gpg.key --export $key_id
 
 echo "A"
 
@@ -40,9 +40,13 @@ ls -la $target
 
 echo "C"
 
+ls -la $target/var/www/repos/apt/debian
+
+echo "D"
+
 mv $target/registry.gpg.key $target/var/www/repos/apt/debian/registry.gpg.key
 
-cd $target/var/www/repos/apt/debian && $ROOTCMD reprepro export
+$ROOTCMD reprepro -b $target/var/www/repos/apt/debian export
 
 #echo "G"
 
