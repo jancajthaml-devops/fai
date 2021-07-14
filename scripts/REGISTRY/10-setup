@@ -68,8 +68,8 @@ echo "key exported"
 
 #ls -la $target/var/www/repos/apt/debian
 
-ls -la /var/www/repos/apt/debian
+ls -la $target/var/www/repos/apt/debian
 
-$ROOTCMD reprepro -b /var/www/repos/apt/debian export
+reprepro -b $target/var/www/repos/apt/debian export
 
 exit $error
