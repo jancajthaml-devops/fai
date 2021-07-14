@@ -2,7 +2,15 @@
 
 error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
 
+echo "A"
+
+ls -la $target/root
+
 $ROOTCMD gpg --list-keys
+
+echo "B"
+
+ls -la $target/root
 
 cat > $target/registry <<-EOF
      %echo Generating a basic OpenPGP key
@@ -33,6 +41,7 @@ mv $target/registry $target/root/.gnupg/registry
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
+# fixme with fcopy
 cat > $target/var/www/repos/apt/debian/conf/override.dbr <<EOF
 dbr Priority optional
 dbr Section net
@@ -48,17 +57,6 @@ SignWith: ${sub_key}
 DebOverride: override.dbr
 EOF
 
-#echo "0"
-
-#cat $target/var/www/repos/apt/debian/conf/override.dbr
-
-#echo "1"
-
-#cat $target/var/www/repos/apt/debian/conf/distributions
-
-#echo "2"
-
-
 $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
 
 echo "key exported"
@@ -70,6 +68,6 @@ echo "key exported"
 
 ls -la $target/var/www/repos/apt/debian
 
-reprepro -b $target/var/www/repos/apt/debian export
+$ROOTCMD reprepro -b /var/www/repos/apt/debian export
 
 exit $error
