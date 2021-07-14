@@ -32,6 +32,8 @@ rm -f $target/registry $target/registrye
 
 echo "B"
 
+ls -la $target
+
 key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
 
 echo "C"
@@ -44,10 +46,13 @@ ls -la $target/var/www/repos/apt/debian
 
 echo "E"
 
-$ROOTCMD gpg --armor --output $target/var/www/repos/apt/debian/dbr.gpg.key --export $key_id
+echo $ROOTCMD gpg --armor --output $target/var/www/repos/apt/debian/dbr.gpg.key --export $key_id
 
 echo "F"
 
+$ROOTCMD gpg --armor --output $target/var/www/repos/apt/debian/dbr.gpg.key --export $key_id
+
+echo "G"
 
 #reprepro export
 
