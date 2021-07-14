@@ -27,16 +27,15 @@ $ROOTCMD gpg --batch --generate-key registry
 
 echo "A"
 
-ls -la $target
+cat $target/registry
 
 rm -f $target/registry
 
 echo "B"
 
-ls -la $target
+cat $target/registrye
 
-$key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
-
+key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
 
 echo "C"
 
