@@ -4,12 +4,25 @@ error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
 
 $ROOTCMD gpg --list-keys
 
+cat >$target/registry <<EOF
+     %echo Generating a basic OpenPGP key
+     Key-Type: DSA
+     Key-Length: 1024
+     Subkey-Type: ELG-E
+     Subkey-Length: 1024
+     Name-Real: Registry
+     Expire-Date: 0
+     Passphrase:
+     %commit
+     %echo done
+EOF
+sed -ie 's/Passphrase:/Passphrase: '${ROOTPW}'/' $target/registry
+
 $ROOTCMD gpg --batch --generate-key registry
 
 rm -f $target/registry $target/registrye
 
 key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
-
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
@@ -29,20 +42,6 @@ cat >$target/var/www/repos/apt/debian/conf/distributions <<EOF
      DebOverride: override.dbr
 EOF
 sed -ie 's/SignWith:/SignWith: '${key_id}'/' $target/var/www/repos/apt/debian/conf/distributions
-
-cat >$target/registry <<EOF
-     %echo Generating a basic OpenPGP key
-     Key-Type: DSA
-     Key-Length: 1024
-     Subkey-Type: ELG-E
-     Subkey-Length: 1024
-     Name-Real: Registry
-     Expire-Date: 0
-     Passphrase:
-     %commit
-     %echo done
-EOF
-sed -ie 's/Passphrase:/Passphrase: '${ROOTPW}'/' $target/registry
 
 echo "0"
 
