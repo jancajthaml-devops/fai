@@ -24,11 +24,21 @@ sed -ie 's/Passphrase:/Passphrase: '${ROOTPW}'/' $target/registry
 
 $ROOTCMD gpg --batch --generate-key registry
 
+ls -la $target
+
 rm -f $target/registry $target/registrye
 
 key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
 
-mkdir -p $target/var/www/repos/apt/debian
+#mkdir -p $target/var/www/repos/apt/debian
+
+ls -la $target/var/www/repos/apt/debian
+
+echo "0"
+
+ls -la $target/var/www/repos/apt/debian/distributions
+
+echo "1"
 
 $ROOTCMD gpg --armor --output $target/var/www/repos/apt/debian/registry.gpg.key --export $key_id
 
@@ -41,11 +51,6 @@ echo "B"
 ls -la $target
 
 echo "C"
-
-ls -la $target/var/www/repos/apt/debian
-ls -la $target/var/www/repos/apt/debian/distributions
-
-echo "D"
 
 $ROOTCMD reprepro -b $target/var/www/repos/apt/debian export
 
