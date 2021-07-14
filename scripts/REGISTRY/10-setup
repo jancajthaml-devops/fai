@@ -24,7 +24,8 @@ $ROOTCMD gpg --list-keys
 
 key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
 
-rm -f $target/registry $target/registrye
+mv $target/registry /root/.gnupg/registry
+mv $target/registrye /root/.gnupg/registrye
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
@@ -35,7 +36,7 @@ EOF
 
 cat >$target/var/www/repos/apt/debian/conf/distributions <<EOF
 Origin: OS-64
-Codename: buster
+Codename: dbr
 Architectures: amd64 arm64
 Components: main
 Description: OS-64 REGISTRY
