@@ -6,7 +6,7 @@ error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
 
 $ROOTCMD gpg --list-keys
 
-cat > $target/dbr <<-EOF
+cat > $target/registry <<-EOF
      %echo Generating a basic OpenPGP key
      Key-Type: DSA
      Key-Length: 1024
@@ -19,19 +19,19 @@ cat > $target/dbr <<-EOF
      %echo done
 EOF
 
-$ROOTCMD gpg --batch --generate-key dbr
+$ROOTCMD gpg --batch --generate-key registry
 
 #echo "key generated"
 
-$ROOTCMD gpg --with-colons --keyid-format=short --list-keys dbr
+$ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry
 
-sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys dbr | grep sub | head -1 | cut -d':' -f5)
+sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | head -1 | cut -d':' -f5)
 
 echo "key is [$sub_key]"
 
 #ls -la $target
 
-mv $target/dbr $target/root/.gnupg/dbr
+mv $target/registry $target/root/.gnupg/registry
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
@@ -50,7 +50,7 @@ SignWith: ${sub_key}
 DebOverride: override.dbr
 EOF
 
-$ROOTCMD gpg --armor --output /var/www/repos/apt/debian/dbr.gpg.key --export $sub_key
+$ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
 
 echo "A"
 
