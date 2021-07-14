@@ -33,8 +33,7 @@ EOF
 
 cat >$target/var/www/repos/apt/debian/conf/distributions <<EOF
 Origin: OS-64
-Label: dbr_5.2
-Codename: dbr
+Codename: buster
 Architectures: amd64 arm64
 Components: main
 Description: OS-64 REGISTRY
@@ -52,6 +51,10 @@ echo "1"
 cat $target/var/www/repos/apt/debian/conf/distributions
 
 echo "2"
+
+$ROOTCMD gpg --list-keys
+
+echo "3"
 
 $ROOTCMD gpg --armor --output ./registry.gpg.key --export $key_id
 mv $target/registry.gpg.key $target/var/www/repos/apt/debian/registry.gpg.key
