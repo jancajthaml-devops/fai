@@ -1,12 +1,10 @@
 #!/bin/bash
 
-echo "A"
 
 #mkdir -p /var/www/repos/apt/debian
 #cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000- debian.conf
 
 $ROOTCMD gpg --list-keys
-
 
 cat >registry <<EOF
      %echo Generating a basic OpenPGP key

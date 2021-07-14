@@ -26,3 +26,6 @@ ROOTPW='56hNVqht51tzc'
 
 username=os
 USERPW='56hNVqht51tzc'
+
+verbose=1
+debug=1
