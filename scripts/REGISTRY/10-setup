@@ -4,7 +4,7 @@ error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
 
 $ROOTCMD gpg --list-keys
 
-cat >$target/registry <<EOF
+cat > $target/registry <<-EOF
      %echo Generating a basic OpenPGP key
      Key-Type: DSA
      Key-Length: 1024
@@ -12,38 +12,38 @@ cat >$target/registry <<EOF
      Subkey-Length: 1024
      Name-Real: Registry
      Expire-Date: 0
-     Passphrase:
+     Passphrase: ${ROOTPW}
      %commit
      %echo done
 EOF
-sed -ie 's/Passphrase:/Passphrase: '${ROOTPW}'/' $target/registry
 
 $ROOTCMD gpg --batch --generate-key registry
 
 $ROOTCMD gpg --list-keys
 
-key_id=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep pub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
+sub_key=$($ROOTCMD gpg --list-keys --keyid-format=short registry | grep sub | grep -o -P '(?<=/)[A-Z0-9]{8}' | head -1)
+
+echo "key is $sub_key"
 
 mv $target/registry /root/.gnupg/registry
 mv $target/registrye /root/.gnupg/registrye
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
-cat >$target/var/www/repos/apt/debian/conf/override.dbr <<EOF
+cat > $target/var/www/repos/apt/debian/conf/override.dbr <<EOF
 dbr Priority optional
 dbr Section net
 EOF
 
-cat >$target/var/www/repos/apt/debian/conf/distributions <<EOF
+cat > $target/var/www/repos/apt/debian/conf/distributions <<-EOF
 Origin: OS-64
 Codename: dbr
 Architectures: amd64 arm64
 Components: main
 Description: OS-64 REGISTRY
-SignWith:
+SignWith: ${sub_key}
 DebOverride: override.dbr
 EOF
-sed -ie 's/SignWith:/SignWith: '${key_id}'/' $target/var/www/repos/apt/debian/conf/distributions
 
 echo "0"
 
@@ -59,7 +59,7 @@ $ROOTCMD gpg --list-keys
 
 echo "3"
 
-$ROOTCMD gpg --armor --output ./registry.gpg.key --export $key_id
+$ROOTCMD gpg --armor --output ./registry.gpg.key --export $sub_key
 mv $target/registry.gpg.key $target/var/www/repos/apt/debian/registry.gpg.key
 
 ls -la $target/var/www/repos/apt/debian
