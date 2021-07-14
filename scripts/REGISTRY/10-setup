@@ -2,11 +2,7 @@
 
 error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
 
-#mkdir -p /var/www/repos/apt/debian
-#cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000- debian.conf
-
 $ROOTCMD gpg --list-keys
-
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
@@ -16,12 +12,12 @@ cat >$target/var/www/repos/apt/debian/conf/override.dbr <<EOF
 EOF
 
 cat >$target/var/www/repos/apt/debian/conf/distributions <<EOF
-     Origin: Dynamsoft
+     Origin: OS-64
      Label: dbr_5.2
      Codename: dbr
      Architectures: amd64
      Components: main
-     Description: Dynamsoft Barcode SDK for Linux
+     Description: OS-64 REGISTRY
      SignWith:
      DebOverride: override.dbr
 EOF
@@ -38,7 +34,6 @@ cat >$target/registry <<EOF
      %commit
      %echo done
 EOF
-
 sed -ie 's/Passphrase:/Passphrase: '${ROOTPW}'/' $target/registry
 
 $ROOTCMD gpg --batch --generate-key registry
@@ -63,17 +58,6 @@ echo "2"
 
 $ROOTCMD gpg --armor --output $target/var/www/repos/apt/debian/registry.gpg.key --export $key_id
 
-echo "A"
-
-ls -la 
-
-echo "B"
-
-ls -la $target
-
-echo "C"
-
-$ROOTCMD reprepro -b $target/var/www/repos/apt/debian/conf export
-
+$ROOTCMD reprepro -b $target/var/www/repos/apt/debian export
 
 exit $error
