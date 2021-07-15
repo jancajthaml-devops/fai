@@ -2,15 +2,25 @@
 
 echo "BEFORE"
 
+$ROOTCMD mkdir -p /etc/apt/trusted.gpg.d/trusted.gpg.d
+
 $ROOTCMD ls -la /etc/apt/trusted.gpg.d/trusted.gpg.d
+
+$ROOTCMD apt-key list
+
+echo "0"
 
 if ifclass DOCKER ; then
 	$ROOTCMD cat /tmp/pks/docker | apt-key add -
 	$ROOTCMD rm -f /tmp/pks/docker
 fi
 
+echo "1"
+
 echo "AFTER"
 
 $ROOTCMD ls -la /etc/apt/trusted.gpg.d/trusted.gpg.d
+
+$ROOTCMD apt-key list
 
 exit 0
