@@ -6,8 +6,9 @@ error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
 
 $ROOTCMD gpg --list-keys
 
-distro=$($ROOTCMD lsb_release -sc)
+distro=buster
 
+echo "distro: ${distro}"
 $ROOTCMD cat > /root/.gnupg/gpg-agent.conf <<-EOF
 default-cache-ttl 46000
 pinentry-program /usr/bin/pinentry
@@ -63,11 +64,9 @@ $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --expor
 
 echo "A"
 
-#$ROOTCMD reprepro -b /var/www/repos/apt/debian export
-
-#echo "B"
-
 fcopy -iM /usr/sbin/reporepro_auto
+
+echo "B"
 
 $ROOTCMD cat /usr/sbin/reporepro_auto
 
