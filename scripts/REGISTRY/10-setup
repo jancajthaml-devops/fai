@@ -41,20 +41,15 @@ $ROOTCMD rm -rf /etc/apache2/sites-available/000-default.conf /var/www/html
 
 $ROOTCMD gpg --batch --generate-key registry && rm $target/registry
 
-ainsl -a /root/.bashrc "export SIGNING_PASSWORD=${passphrase}"
-
-export SIGNING_PASSWORD=${passphrase}
-
 pub_key=$($ROOTCMD gpg --keyid-format=short --list-keys registry | grep pub | head -1 | grep -o -P '(?<=/)[A-Z0-9]{8}')
 
 $ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key} <<-EOF
 addkey
-4          
-4096  
-0     
-"$SIGNING_PASSWORD"
-y     
-y     
+4
+4096
+0
+y
+y
 save
 EOF
 
@@ -86,8 +81,13 @@ $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --expor
 
 fcopy -iM /usr/sbin/reprepro-auto
 
+ainsl -a /root/.bashrc "export SIGNING_PASSWORD=${passphrase}"
+
+export SIGNING_PASSWORD=${passphrase}
+
 $ROOTCMD chmod +x /usr/sbin/reprepro-auto
 
 $ROOTCMD /usr/sbin/reprepro-auto export
+
 
 exit $error
