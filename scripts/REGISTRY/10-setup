@@ -29,12 +29,12 @@ $ROOTCMD gpg --batch --generate-key registry && rm $target/registry
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | head -1 | cut -d':' -f5)
 
-#$ROOTCMD gpg-agent --daemon
-#$ROOTCMD gpg-connect-agent reloadagent /bye
-#
-#$ROOTCMD /usr/lib/gnupg2/gpg-preset-passphrase -c ${sub_key} <<EOF
-#${ROOTPW}
-#EOF
+$ROOTCMD gpg-agent --daemon
+$ROOTCMD gpg-connect-agent reloadagent /bye
+
+$ROOTCMD /usr/lib/gnupg/gpg-preset-passphrase -c ${sub_key} <<EOF
+${ROOTPW}
+EOF
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
@@ -67,13 +67,11 @@ $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --expor
 echo "A"
 
 # cache paraphrase so next command does not need it
-#echo x > $target/stub_doc
 $ROOTCMD \
+     echo X > stub_doc && \
      gpg --pinentry-mode=loopback --passphrase=${ROOTPW} --output stub_doc.sig --sign stub_doc && \
      reprepro --ask-passphrase -b /var/www/repos/apt/debian export && \
      rm -f $target/stub_doc $target/stub_doc.sig
-
-#
 
 echo "B"
 
