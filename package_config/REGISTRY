@@ -2,6 +2,7 @@ PACKAGES install-norec OS-64
 gnupg
 apache2
 reprepro
+expect
 
 PACKAGES install-norec DOCKER
 docker-registry
