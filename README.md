@@ -3,7 +3,7 @@
 fully automatic intallation
 
 
-- Debian Stretch
+- Debian Buster
 - Docker
 - Private Debian APT registry
 - Private Docker Registry
