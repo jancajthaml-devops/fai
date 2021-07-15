@@ -71,12 +71,17 @@ ls -la /usr/sbin
 
 echo "B"
 
-$ROOTCMD cat /usr/sbin/reprepro-auto
+ainsl -a /root/.bashrc "export SIGNING_PASSWORD=${passphrase}"
 
+$ROOTCMD source /root/.bashrc
+
+#$ROOTCMD cat /usr/sbin/reprepro-auto
+
+echo "SIGNING_PASSWORD=${SIGNING_PASSWORD}"
 #echo "SIGNING_PASSWORD=${passphrase}"
 $ROOTCMD chmod +x /usr/sbin/reprepro-auto
 
-$ROOTCMD SIGNING_PASSWORD=${passphrase} /usr/sbin/reprepro-auto -b /var/www/repos/apt/debian export
+$ROOTCMD  /usr/sbin/reprepro-auto -b /var/www/repos/apt/debian export
 
 echo "B"
 
