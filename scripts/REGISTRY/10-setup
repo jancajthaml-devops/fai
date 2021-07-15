@@ -73,7 +73,7 @@ echo "B"
 
 ainsl -a /root/.bashrc "export SIGNING_PASSWORD=${passphrase}"
 
-$ROOTCMD export SIGNING_PASSWORD=${passphrase}
+export SIGNING_PASSWORD=${passphrase}
 
 #$ROOTCMD cat /usr/sbin/reprepro-auto
 
