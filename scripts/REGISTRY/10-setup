@@ -74,6 +74,7 @@ echo "B"
 $ROOTCMD cat /usr/sbin/reprepro-auto
 
 #echo "SIGNING_PASSWORD=${passphrase}"
+$ROOTCMD chmod +x /usr/sbin/reprepro-auto
 
 $ROOTCMD SIGNING_PASSWORD=${passphrase} /usr/sbin/reprepro-auto -b /var/www/repos/apt/debian export
 
