@@ -68,11 +68,10 @@ echo "A"
 
 # cache paraphrase so next command does not need it
 #echo x > $target/stub_doc
-$ROOTCMD (
+$ROOTCMD \
      gpg --pinentry-mode=loopback --passphrase=${ROOTPW} --output stub_doc.sig --sign stub_doc && \
      reprepro --ask-passphrase -b /var/www/repos/apt/debian export && \
      rm -f $target/stub_doc $target/stub_doc.sig
-)
 
 #
 
