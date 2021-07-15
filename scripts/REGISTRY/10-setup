@@ -32,7 +32,7 @@ EOF
 
 fcopy -iM /etc/apache2/sites-available/debian.conf
 
-$ROOTCMD /usr/sbin/a2ensite /etc/apache2/sites-available/debian.conf
+$ROOTCMD /usr/sbin/a2ensite debian.conf
 
 $ROOTCMD gpg --batch --generate-key registry && rm $target/registry
 
