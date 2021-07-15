@@ -45,16 +45,11 @@ $ROOTCMD gpg --batch --generate-key registry && rm $target/registry
 
 pub_key=$($ROOTCMD gpg --keyid-format=short --list-keys registry | grep pub | head -1 | grep -o -P '(?<=/)[A-Z0-9]{8}')
 
-echo "pub key ${pub_key}"
-echo "passphrase ${passphrase}"
-
-echo "A"
-
-$ROOTCMD /usr/bin/expect <<EOF
+$ROOTCMD /usr/bin/expect 1> /dev/null <<EOF
 set timeout 30
 spawn gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
 expect {
-    timeout                                             {send_user "\n!!! timeout !!!\n"; exit 127}
+    timeout                                             {exit 127}
     "Bad passphrase*"                                   {exit 127}
     "GET_LINE keyedit.prompt*"                          {send -- "addkey\r"; exp_continue}
     "GET_LINE keygen.algo*"                             {send -- "4\r"; exp_continue}
@@ -69,12 +64,6 @@ set returnvalues [wait]
 set exitcode [lindex \$returnvalues 3]
 exit \$exitcode
 EOF
-
-echo "B"
-
-$ROOTCMD gpg --list-keys
-
-echo "C"
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | grep ':s:' | head -1 | cut -d':' -f5)
 
