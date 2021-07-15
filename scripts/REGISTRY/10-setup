@@ -32,7 +32,12 @@ EOF
 
 fcopy -iM /etc/apache2/sites-available/debian.conf
 
+ainsl -a /etc/apache2/apache2.conf "ServerName 127.0.0.1"
+
+$ROOTCMD /usr/sbin/a2dissite 000-default.conf
 $ROOTCMD /usr/sbin/a2ensite debian.conf
+$ROOTCMD /usr/sbin/apache2ctl configtest
+$ROOTCMD rm -rf /etc/apache2/sites-available/000-default.conf /var/www/html
 
 $ROOTCMD gpg --batch --generate-key registry && rm $target/registry
 

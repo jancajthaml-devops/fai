@@ -6,7 +6,7 @@
         ErrorLog ${APACHE_LOG_DIR}/error.log
         CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-        <Directory /var/www/repos/ >
+        <Directory "/var/www/repos/" >
                 Order allow,deny
                 Allow from all
         </Directory>
