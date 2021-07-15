@@ -11,6 +11,8 @@ $ROOTCMD apt-key list
 echo "0"
 
 if ifclass DOCKER ; then
+	fcopy -iSM /tmp/pks/docker
+	$ROOTCMD ls -la /tmp/pks
 	$ROOTCMD cat /tmp/pks/docker | apt-key add -
 	$ROOTCMD rm -f /tmp/pks/docker
 fi
