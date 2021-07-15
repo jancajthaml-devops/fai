@@ -8,7 +8,8 @@ $ROOTCMD gpg --list-keys
 
 distro=buster
 
-echo "distro: ${distro}"
+#echo "distro: ${distro}"
+
 $ROOTCMD cat > /root/.gnupg/gpg-agent.conf <<-EOF
 default-cache-ttl 46000
 pinentry-program /usr/bin/pinentry
@@ -57,20 +58,20 @@ verbose
 ask-passphrase
 EOF
 
-cat $target/var/www/repos/apt/debian/conf/distributions
-ls -la $target/var/www/repos/apt/debian/conf
+#cat $target/var/www/repos/apt/debian/conf/distributions
+#ls -la $target/var/www/repos/apt/debian/conf
 
 $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
 
 echo "A"
 
-fcopy -iM /usr/sbin/reporepro_auto
+fcopy -iM /usr/sbin/reporepro-auto
 
 echo "B"
 
-$ROOTCMD cat /usr/sbin/reporepro_auto
+$ROOTCMD cat /usr/sbin/reporepro-auto
 
-echo "SIGNING_PASSWORD=${passphrase}"
+#echo "SIGNING_PASSWORD=${passphrase}"
 
 $ROOTCMD SIGNING_PASSWORD=${passphrase} /usr/sbin/reporepro_auto  -b /var/www/repos/apt/debian export
 
