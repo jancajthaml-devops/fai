@@ -48,13 +48,43 @@ pub_key=$($ROOTCMD gpg --keyid-format=short --list-keys registry | grep pub | he
 echo "pub key ${pub_key}"
 echo "passphrase ${passphrase}"
 
-$ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key} <<EOF
-addkey
-4
-4096
-0
-${passphrase}
+echo "A"
+
+cat > $target/auto-sub-key <<-EOF
+#!/usr/bin/expect -f
+set timeout 20
+spawn gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
+expect {
+    timeout                                             {exit 0}
+    "Secret key is available.*"                         {send -- "addkey\r"; send_user " *** adding key ***"; exp_continue}
+    "Please select what kind of key you want*"          {send -- "4\r"; send_user " *** selecting key ***"; exp_continue}
+    "What keysize do you want?*"                        {send -- "4096\r"; send_user " *** selecting key size ***"; exp_continue}
+    "Please specify how long the key should be valid*"  {send -- "0\r"; send_user " *** selecting expiration ***"; exp_continue}
+    "Is this correct?*"                                 {send -- "y\r"; send_user " *** confirming ***"; exp_continue}
+    "Really create?*"                                   {send -- "y\r"; send_user " *** confirming ***"; exp_continue}
+    "We need to generate a lot of random bytes*"        {send -- "${passphrase}\r"; send_user " *** generating random noise ***"; exp_continue}
+    "Please enter the passphrase*"                      {send -- "${passphrase}\r"; send_user " *** entering passphrase ***"; exp_continue}
+}
+set returnvalues [wait]
+set exitcode [lindex \$returnvalues 3]
+exit \$exitcode
 EOF
+
+chmod +x $target/auto-sub-key
+
+echo "B"
+
+$target/auto-sub-key
+
+echo "C"
+
+#$ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key} <<EOF
+#addkey
+#4
+#4096
+#0
+#${passphrase}
+#EOF
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | grep ':s:' | head -1 | cut -d':' -f5)
 
