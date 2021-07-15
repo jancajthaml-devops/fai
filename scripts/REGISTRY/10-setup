@@ -4,17 +4,13 @@ ifclass OS-64 || exit 0
 
 error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
 
-export GPG_TTY=$(tty)
-export GPG_AGENT_INFO=$HOME/.gnupg/S.gpg-agent
-
 $ROOTCMD gpg --list-keys
 
-distro=$(lsb_release -sc)
+distro=$($ROOTCMD lsb_release -sc)
 
 $ROOTCMD cat > /root/.gnupg/gpg-agent.conf <<-EOF
 default-cache-ttl 46000
 pinentry-program /usr/bin/pinentry
-allow-preset-passphrase
 EOF
 
 $ROOTCMD gpg-connect-agent reloadagent /bye
@@ -36,10 +32,6 @@ $ROOTCMD gpg --batch --generate-key registry && rm $target/registry
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | head -1 | cut -d':' -f5)
 
-$ROOTCMD /usr/lib/gnupg/gpg-preset-passphrase -c ${sub_key} <<EOF
-${ROOTPW}
-EOF
-
 mkdir -p $target/var/www/repos/apt/debian/conf
 
 cat > $target/var/www/repos/apt/debian/conf/override.${distro} <<EOF
@@ -59,6 +51,7 @@ EOF
 
 cat > $target/var/www/repos/apt/debian/conf/options <<-EOF
 verbose
+ask-passphrase
 EOF
 
 cat $target/var/www/repos/apt/debian/conf/distributions
@@ -68,12 +61,16 @@ $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --expor
 
 echo "A"
 
-$ROOTCMD reprepro -b /var/www/repos/apt/debian export
+#$ROOTCMD reprepro -b /var/www/repos/apt/debian export
+
+#echo "B"
+
+fcopy -iM /usr/sbin/reporepro_auto
+
+$ROOTCMD cat /usr/sbin/reporepro_auto
+
+$ROOTCMD /usr/sbin/reporepro_auto  -b /var/www/repos/apt/debian export
 
 echo "B"
-
-$ROOTCMD reprepro --ask-passphrase -b /var/www/repos/apt/debian export
-
-echo "C"
 
 exit $error
