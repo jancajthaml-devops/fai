@@ -20,6 +20,7 @@ cat > $target/registry <<-EOF
      Subkey-Length: 1024
      Name-Real: Registry
      Expire-Date: 0
+     Passphrase: ${ROOTPW}
      %commit
      %echo done
 EOF
@@ -29,10 +30,10 @@ $ROOTCMD gpg --batch --generate-key registry && rm $target/registry
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | head -1 | cut -d':' -f5)
 
 $ROOTCMD gpg-agent --daemon
-#$ROOTCMD /usr/lib/gnupg2/gpg-preset-passphrase -c ${sub_key} <<EOF
-#${ROOTPW}
-#EOF
-#$ROOTCMD gpg-connect-agent reloadagent /bye
+$ROOTCMD /usr/lib/gnupg2/gpg-preset-passphrase -c ${sub_key} <<EOF
+${ROOTPW}
+EOF
+$ROOTCMD gpg-connect-agent reloadagent /bye
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
