@@ -41,24 +41,22 @@ $ROOTCMD rm -rf /etc/apache2/sites-available/000-default.conf /var/www/html
 
 $ROOTCMD gpg --batch --generate-key registry && rm $target/registry
 
-#FIXME need to generate subkey
-#gpg --edit-key 3C9BBC1DB327CFC53130B7830481277698CB7754
+ainsl -a /root/.bashrc "export SIGNING_PASSWORD=${passphrase}"
 
-
-#echo ${SIGNING_PASSWORD} | gpg --batch --yes --passphrase-fd 0 --quick-add-key 3C9BBC1DB327CFC53130B7830481277698CB7754 rsa4096 sign 0
+export SIGNING_PASSWORD=${passphrase}
 
 pub_key=$($ROOTCMD gpg --keyid-format=short --list-keys registry | grep pub | head -1 | grep -o -P '(?<=/)[A-Z0-9]{8}')
 
-{
-    echo addkey
-    echo 4     # RSA (sign only)
-    echo 4096  # key length
-    echo 0     # key does not expire
-    echo "$SIGNING_PASSWORD"
-    echo y     # is this correct?
-    echo y     # really create?
-    echo save
-} | $ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
+$ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key} <<-EOF
+addkey
+4          
+4096  
+0     
+"$SIGNING_PASSWORD"
+y     
+y     
+save
+EOF
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | grep ':s:' | head -1 | cut -d':' -f5)
 
@@ -87,10 +85,6 @@ EOF
 $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
 
 fcopy -iM /usr/sbin/reprepro-auto
-
-ainsl -a /root/.bashrc "export SIGNING_PASSWORD=${passphrase}"
-
-export SIGNING_PASSWORD=${passphrase}
 
 $ROOTCMD chmod +x /usr/sbin/reprepro-auto
 

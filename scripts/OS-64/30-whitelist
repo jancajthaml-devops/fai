@@ -8,10 +8,7 @@ fi
 
 if ifclass REGISTRY ; then
 	$ROOTCMD apt-key --keyring /etc/apt/trusted.gpg.d/registry.gpg add /var/www/repos/apt/debian/registry.gpg.key
+	$ROOTCMD rm -f /etc/apt/trusted.gpg.d/registry.gpg~
 fi
-
-$ROOTCMD ls -la /etc/apt/trusted.gpg.d
-
-$ROOTCMD apt-key list
 
 exit 0
