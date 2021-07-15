@@ -6,9 +6,9 @@ error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
 
 $ROOTCMD gpg --list-keys
 
-distro=buster
+distro=$($ROOTCMD cat /etc/os-release | grep VERSION_CODENAME | sed "s/VERSION_CODENAME=*//g")
 
-#echo "distro: ${distro}"
+echo "distro: ${distro}"
 
 $ROOTCMD cat > /root/.gnupg/gpg-agent.conf <<-EOF
 default-cache-ttl 0
@@ -58,31 +58,16 @@ verbose
 ask-passphrase
 EOF
 
-#cat $target/var/www/repos/apt/debian/conf/distributions
-#ls -la $target/var/www/repos/apt/debian/conf
-
 $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
 
-echo "A"
-
 fcopy -iM /usr/sbin/reprepro-auto
-
-ls -la /usr/sbin
-
-echo "B"
 
 ainsl -a /root/.bashrc "export SIGNING_PASSWORD=${passphrase}"
 
 export SIGNING_PASSWORD=${passphrase}
 
-#$ROOTCMD cat /usr/sbin/reprepro-auto
-
-$ROOTCMD echo "SIGNING_PASSWORD=${SIGNING_PASSWORD}"
-#echo "SIGNING_PASSWORD=${passphrase}"
 $ROOTCMD chmod +x /usr/sbin/reprepro-auto
 
 $ROOTCMD /usr/sbin/reprepro-auto export
-
-echo "B"
 
 exit $error
