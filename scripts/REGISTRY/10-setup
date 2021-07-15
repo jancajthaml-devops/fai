@@ -1,0 +1,103 @@
+#!/bin/bash
+
+ifclass OS-64 || exit 0
+
+error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
+
+mkdir -p $target/var/www/repos/apt/debian/conf
+
+$ROOTCMD gpg --list-keys
+
+distro=$($ROOTCMD cat /etc/os-release | grep VERSION_CODENAME | sed "s/VERSION_CODENAME=*//g")
+
+$ROOTCMD cat > /root/.gnupg/gpg-agent.conf <<-EOF
+default-cache-ttl 0
+pinentry-program /usr/bin/pinentry
+EOF
+
+$ROOTCMD gpg-connect-agent reloadagent /bye
+
+passphrase=$($ROOTCMD openssl rand -base64 32)
+
+cat > $target/registry <<-EOF
+     %echo Generating a basic OpenPGP key
+     Key-Type: RSA
+     Key-Length: 4096
+     Subkey-Type: RSA
+     Subkey-Length: 4096
+     Name-Real: Registry
+     Expire-Date: 0
+     Passphrase: ${passphrase}
+     %commit
+     %echo done
+EOF
+
+fcopy -iM /etc/apache2/sites-available/debian.conf
+
+ainsl -a /etc/apache2/apache2.conf "ServerName 127.0.0.1"
+
+$ROOTCMD /usr/sbin/a2dissite 000-default.conf
+$ROOTCMD /usr/sbin/a2ensite debian.conf
+$ROOTCMD /usr/sbin/apache2ctl configtest
+$ROOTCMD rm -rf /etc/apache2/sites-available/000-default.conf /var/www/html
+
+$ROOTCMD gpg --batch --generate-key registry && rm $target/registry
+
+pub_key=$($ROOTCMD gpg --keyid-format=short --list-keys registry | grep pub | head -1 | grep -o -P '(?<=/)[A-Z0-9]{8}')
+
+$ROOTCMD /usr/bin/expect 1> /dev/null <<EOF
+set timeout 30
+spawn gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
+expect {
+    timeout                                             {exit 127}
+    "Bad passphrase*"                                   {exit 127}
+    "GET_LINE keyedit.prompt*"                          {send -- "addkey\r"; exp_continue}
+    "GET_LINE keygen.algo*"                             {send -- "4\r"; exp_continue}
+    "GET_LINE keygen.size*"                             {send -- "4096\r"; exp_continue}
+    "GET_LINE keygen.valid*"                            {send -- "0\r"; exp_continue}
+    "Is this correct?*"                                 {send -- "y\r"; exp_continue}
+    "Really create?*"                                   {send -- "y\r"; exp_continue}
+    "KEY_CREATED S*"                                    {send -- "save\r"; exp_continue}
+    "GET_HIDDEN passphrase.enter*"                      {send -- "${passphrase}\r"; exp_continue}
+}
+set returnvalues [wait]
+set exitcode [lindex \$returnvalues 3]
+exit \$exitcode
+EOF
+
+sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | grep ':s:' | head -1 | cut -d':' -f5)
+
+cat > $target/var/www/repos/apt/debian/conf/override.${distro} <<EOF
+${distro} Priority optional
+${distro} Section net
+EOF
+
+cat > $target/var/www/repos/apt/debian/conf/distributions <<EOF
+Origin: OS-64
+Codename: ${distro}
+Architectures: amd64 arm64
+Components: main
+Description: OS-64 REGISTRY
+SignWith: ${sub_key}
+DebOverride: override.${distro}
+EOF
+
+cat > $target/var/www/repos/apt/debian/conf/options <<EOF
+verbose
+ask-passphrase
+EOF
+
+$ROOTCMD gpg --armor --output /var/www/repos/apt/debian/gpg --export $sub_key
+
+fcopy -iM /usr/sbin/reprepro-auto
+
+ainsl -a /root/.bashrc "export SIGNING_PASSWORD=${passphrase}"
+
+export SIGNING_PASSWORD=${passphrase}
+
+$ROOTCMD chmod +x /usr/sbin/reprepro-auto
+
+$ROOTCMD /usr/sbin/reprepro-auto export
+
+
+exit $error

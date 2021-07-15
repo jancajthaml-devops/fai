@@ -1,0 +1,14 @@
+#! /bin/bash
+
+if ifclass DOCKER ; then
+	fcopy -iSM /tmp/pks/docker
+	$ROOTCMD apt-key --keyring /etc/apt/trusted.gpg.d/docker.gpg add /tmp/pks/docker
+	$ROOTCMD rm -f /tmp/pks/docker /etc/apt/trusted.gpg.d/docker.gpg~
+fi
+
+if ifclass REGISTRY ; then
+	$ROOTCMD apt-key --keyring /etc/apt/trusted.gpg.d/registry.gpg add /var/www/repos/apt/debian/gpg
+	$ROOTCMD rm -f /etc/apt/trusted.gpg.d/registry.gpg~
+fi
+
+exit 0
