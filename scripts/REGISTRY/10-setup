@@ -30,6 +30,10 @@ cat > $target/registry <<-EOF
      %echo done
 EOF
 
+fcopy -iM /etc/apache2/sites-available/debian.conf
+
+$ROOTCMD /usr/sbin/a2ensite /etc/apache2/sites-available/debian
+
 $ROOTCMD gpg --batch --generate-key registry && rm $target/registry
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | head -1 | cut -d':' -f5)
