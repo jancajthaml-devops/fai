@@ -8,7 +8,8 @@ fi
 
 if ifclass REGISTRY ; then	
 	pub_key=$($ROOTCMD gpg --keyid-format=short --list-keys registry | grep pub | head -1 | grep -o -P '(?<=/)[A-Z0-9]{8}')
-	$ROOTCMD gpg --armor --export $pub_key | $ROOTCMD apt-key --keyring /etc/apt/trusted.gpg.d/registry.gpg add -
+	$ROOTCMD gpg --armor --export $pub_key | \
+	$ROOTCMD apt-key --keyring /etc/apt/trusted.gpg.d/registry.gpg add -
 fi
 
 $ROOTCMD ls -la /etc/apt/trusted.gpg.d
