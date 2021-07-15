@@ -1,19 +1,5 @@
 #! /bin/bash
 
-echo "BEFORE"
-
-$ROOTCMD ls -la /etc/apt/trusted.gpg.d/trusted.gpg.d
-
 fcopy -iSM /etc/apt/sources.list.d/docker.list
-
-fcopy -iSM /tmp/pks/docker
-
-$ROOTCMD cat /tmp/pks/docker | apt-key add -
-
-$ROOTCMD rm -f /tmp/pks/docker
-
-echo "AFTER"
-
-$ROOTCMD ls -la /etc/apt/trusted.gpg.d/trusted.gpg.d
 
 exit 0
