@@ -11,7 +11,7 @@ distro=buster
 #echo "distro: ${distro}"
 
 $ROOTCMD cat > /root/.gnupg/gpg-agent.conf <<-EOF
-default-cache-ttl 46000
+default-cache-ttl 0
 pinentry-program /usr/bin/pinentry
 EOF
 
@@ -81,7 +81,7 @@ $ROOTCMD echo "SIGNING_PASSWORD=${SIGNING_PASSWORD}"
 #echo "SIGNING_PASSWORD=${passphrase}"
 $ROOTCMD chmod +x /usr/sbin/reprepro-auto
 
-$ROOTCMD  /usr/sbin/reprepro-auto -b /var/www/repos/apt/debian export
+$ROOTCMD /usr/sbin/reprepro-auto export
 
 echo "B"
 

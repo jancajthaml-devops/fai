@@ -4,23 +4,15 @@ set timeout 5
 
 set passphrase "$env(SIGNING_PASSWORD)"
 
-# Call reprepro with variable length arguments, so that this script
-# takes the same arguments as the original program
-spawn reprepro {*}$argv
+spawn reprepro -b /var/www/repos/apt/debian [lindex $argv 0] [lindex $argv 1] [lindex $argv 2] [lindex $argv 3]
 
 expect {
-    timeout                     {send_error "\nFailed to get password prompt\n";
-                                 exit 1}
+    timeout                     {exit 0}
     "Please enter passphrase*"  {send -- "$passphrase\r";
                                  send_user " *** entering passphrase ***";
                                  exp_continue}
 }
 
-# Get the pid, spawnid, oserr and exitcode from the spawned reprepro command
 set returnvalues [wait]
-
-# Extract the reprepro exit code
 set exitcode [lindex $returnvalues 3]
-
-# Exit with the exitcode from reprepro (0 on success)
 exit $exitcode
