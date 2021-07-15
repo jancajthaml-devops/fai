@@ -52,7 +52,7 @@ echo "A"
 
 $ROOTCMD /usr/bin/expect <<EOF
 set timeout 30
-$ROOTCMD spawn gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
+spawn gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
 expect {
     timeout                                             {send_user "\n!!! timeout !!!\n"; exit 127}
     "Bad passphrase*"                                   {exit 127}
@@ -69,6 +69,12 @@ set returnvalues [wait]
 set exitcode [lindex \$returnvalues 3]
 exit \$exitcode
 EOF
+
+echo "B"
+
+$ROOTCMD gpg --list-keys
+
+echo "C"
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | grep ':s:' | head -1 | cut -d':' -f5)
 
