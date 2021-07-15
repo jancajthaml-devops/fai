@@ -4,9 +4,14 @@ ifclass OS-64 || exit 0
 
 error=0; trap 'error=$(($?>$error?$?:$error))' ERR # save maximum error code
 
+export GPG_TTY=$(tty)
+export GPG_AGENT_INFO=$HOME/.gnupg/S.gpg-agent
+
 $ROOTCMD gpg --list-keys
 
-cat > $target/root/.gnupg/gpg-agent.conf <<-EOF
+distro=$(lsb_release -sc)
+
+$ROOTCMD cat > /root/.gnupg/gpg-agent.conf <<-EOF
 default-cache-ttl 46000
 pinentry-program /usr/bin/pinentry
 allow-preset-passphrase
@@ -31,34 +36,33 @@ $ROOTCMD gpg --batch --generate-key registry && rm $target/registry
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | head -1 | cut -d':' -f5)
 
-$ROOTCMD \
-gpg-agent --daemon && \
-gpg-connect-agent reloadagent /bye && \
-/usr/lib/gnupg/gpg-preset-passphrase -c ${sub_key} <<EOF
+$ROOTCMD /usr/lib/gnupg/gpg-preset-passphrase -c ${sub_key} <<EOF
 ${ROOTPW}
 EOF
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
-cat > $target/var/www/repos/apt/debian/conf/override.buster <<EOF
-buster Priority optional
-buster Section net
+cat > $target/var/www/repos/apt/debian/conf/override.${distro} <<EOF
+${distro} Priority optional
+${distro} Section net
 EOF
 
 cat > $target/var/www/repos/apt/debian/conf/distributions <<-EOF
 Origin: OS-64
-Codename: buster
+Codename: ${distro}
 Architectures: amd64 arm64
 Components: main
 Description: OS-64 REGISTRY
 SignWith: ${sub_key}
-DebOverride: override.buster
+DebOverride: override.${distro}
 EOF
 
 cat > $target/var/www/repos/apt/debian/conf/options <<-EOF
 verbose
 EOF
-#ask-passphrase
+
+cat $target/var/www/repos/apt/debian/conf/distributions
+ls -la $target/var/www/repos/apt/debian/conf
 
 $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
 
