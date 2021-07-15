@@ -65,17 +65,17 @@ $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --expor
 
 echo "A"
 
-fcopy -iM /usr/sbin/reporepro-auto
+fcopy -iM /usr/sbin/reprepro-auto
 
 ls -la /usr/sbin
 
 echo "B"
 
-$ROOTCMD cat /usr/sbin/reporepro-auto
+$ROOTCMD cat /usr/sbin/reprepro-auto
 
 #echo "SIGNING_PASSWORD=${passphrase}"
 
-$ROOTCMD SIGNING_PASSWORD=${passphrase} /usr/sbin/reporepro_auto  -b /var/www/repos/apt/debian export
+$ROOTCMD SIGNING_PASSWORD=${passphrase} /usr/sbin/reprepro-auto -b /var/www/repos/apt/debian export
 
 echo "B"
 
