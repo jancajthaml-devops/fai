@@ -50,40 +50,39 @@ echo "passphrase ${passphrase}"
 
 echo "A"
 
-cat > $target/auto-sub-key <<-EOF
-#!/usr/bin/expect -f
-set timeout 20
+$ROOTCMD /usr/bin/expect -c <<EOF
+set timeout 60
 spawn gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
 expect {
-    timeout                                             {exit 0}
-    "Secret key is available.*"                         {send -- "addkey\r"; send_user " *** adding key ***"; exp_continue}
-    "Please select what kind of key you want*"          {send -- "4\r"; send_user " *** selecting key ***"; exp_continue}
-    "What keysize do you want?*"                        {send -- "4096\r"; send_user " *** selecting key size ***"; exp_continue}
-    "Please specify how long the key should be valid*"  {send -- "0\r"; send_user " *** selecting expiration ***"; exp_continue}
-    "Is this correct?*"                                 {send -- "y\r"; send_user " *** confirming ***"; exp_continue}
-    "Really create?*"                                   {send -- "y\r"; send_user " *** confirming ***"; exp_continue}
-    "We need to generate a lot of random bytes*"        {send -- "stubbtusstub\r"; send_user " *** generating random noise ***"; exp_continue}
-    "Please enter the passphrase*"                      {send -- "${passphrase}\r"; send_user " *** entering passphrase ***"; exp_continue}
+    timeout                                             {send_user "\n!!! timeout !!!\n"; exit 127}
+    "Secret key is available.*"                         {send -- "addkey\r"; exp_continue}
+    "Please select what kind of key you want*"          {send -- "4\r"; exp_continue}
+    "What keysize do you want?*"                        {send -- "4096\r"; exp_continue}
+    "Please specify how long the key should be valid*"  {send -- "0\r"; exp_continue}
+    "Is this correct?*"                                 {send -- "y\r"; exp_continue}
+    "Really create?*"                                   {send -- "y\r"; exp_continue}
+    "We need to generate a lot of random bytes*"        {send -- "stubbtusstub\r"; exp_continue}
+    "Please enter the passphrase*"                      {send -- "${passphrase}\r"; exp_continue}
 }
 set returnvalues [wait]
 set exitcode [lindex \$returnvalues 3]
 exit \$exitcode
 EOF
 
-cat $target/auto-sub-key
+#cat $target/auto-sub-key
 
-chmod +x $target/auto-sub-key
+#chmod +x $target/auto-sub-key
 
-echo "B"
+#echo "B"
 
-$ROOTCMD ls -la
+#$ROOTCMD ls -la
 
 
-echo "C"
+#echo "C"
 
-$ROOTCMD ./auto-sub-key
+#$ROOTCMD ./auto-sub-key
 
-rm -f $target/auto-sub-key
+#rm -f $target/auto-sub-key
 
 echo "C"
 
