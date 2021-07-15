@@ -50,7 +50,7 @@ echo "passphrase ${passphrase}"
 
 echo "A"
 
-$ROOTCMD /usr/bin/expect -c - <<EOF
+$ROOTCMD /usr/bin/expect <<EOF
 set timeout 60
 spawn gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
 expect {
