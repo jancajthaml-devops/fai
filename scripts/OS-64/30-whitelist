@@ -11,7 +11,7 @@ echo "0"
 if ifclass DOCKER ; then
 	fcopy -iSM /tmp/pks/docker
 	$ROOTCMD cat /tmp/pks/docker
-	$ROOTCMD apt-key add /tmp/pks/docker
+	$ROOTCMD apt-key --keyring /etc/apt/trusted.gpg.d/docker.gpg add /tmp/pks/docker
 	$ROOTCMD rm -f /tmp/pks/docker
 fi
 
