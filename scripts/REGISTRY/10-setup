@@ -50,9 +50,9 @@ echo "passphrase ${passphrase}"
 
 echo "A"
 
-$ROOTCMD /usr/bin/expect <<EOF
-set timeout 60
-spawn gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
+echo <<EOF
+set timeout 20
+spawn gpg --command-fd=0 --pinentry-mode=loopback --edit-key ${pub_key}
 expect {
     timeout                                             {send_user "\n!!! timeout !!!\n"; exit 127}
     "Secret key is available.*"                         {send -- "addkey\r"; exp_continue}
@@ -68,6 +68,28 @@ set returnvalues [wait]
 set exitcode [lindex \$returnvalues 3]
 exit \$exitcode
 EOF
+
+$ROOTCMD /usr/bin/expect <<EOF
+set timeout 20
+spawn gpg --command-fd=0 --pinentry-mode=loopback --edit-key ${pub_key}
+expect {
+    timeout                                             {send_user "\n!!! timeout !!!\n"; exit 127}
+    "Secret key is available.*"                         {send -- "addkey\r"; exp_continue}
+    "Please select what kind of key you want*"          {send -- "4\r"; exp_continue}
+    "What keysize do you want?*"                        {send -- "4096\r"; exp_continue}
+    "Please specify how long the key should be valid*"  {send -- "0\r"; exp_continue}
+    "Is this correct?*"                                 {send -- "y\r"; exp_continue}
+    "Really create?*"                                   {send -- "y\r"; exp_continue}
+    "We need to generate a lot of random bytes*"        {send -- "stubbtusstub\r"; exp_continue}
+    "Please enter the passphrase*"                      {send -- "${passphrase}\r"; exp_continue}
+}
+set returnvalues [wait]
+set exitcode [lindex \$returnvalues 3]
+exit \$exitcode
+EOF
+
+
+
 
 #cat $target/auto-sub-key
 
