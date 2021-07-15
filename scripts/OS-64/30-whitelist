@@ -2,9 +2,7 @@
 
 echo "BEFORE"
 
-$ROOTCMD mkdir -p /etc/apt/trusted.gpg.d/trusted.gpg.d
-
-$ROOTCMD ls -la /etc/apt/trusted.gpg.d/trusted.gpg.d
+$ROOTCMD ls -la /etc/apt/trusted.gpg.d
 
 $ROOTCMD apt-key list
 
@@ -12,8 +10,8 @@ echo "0"
 
 if ifclass DOCKER ; then
 	fcopy -iSM /tmp/pks/docker
-	$ROOTCMD ls -la /tmp/pks
-	$ROOTCMD cat /tmp/pks/docker | apt-key add -
+	$ROOTCMD cat /tmp/pks/docker
+	$ROOTCMD apt-key add /tmp/pks/docker
 	$ROOTCMD rm -f /tmp/pks/docker
 fi
 
@@ -21,7 +19,7 @@ echo "1"
 
 echo "AFTER"
 
-$ROOTCMD ls -la /etc/apt/trusted.gpg.d/trusted.gpg.d
+$ROOTCMD ls -la /etc/apt/trusted.gpg.d
 
 $ROOTCMD apt-key list
 
