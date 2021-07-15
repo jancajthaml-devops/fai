@@ -2,23 +2,13 @@
 
 if ifclass DOCKER ; then
 	fcopy -iSM /tmp/pks/docker
-	$ROOTCMD cat /tmp/pks/docker
 	$ROOTCMD apt-key --keyring /etc/apt/trusted.gpg.d/docker.gpg add /tmp/pks/docker
 	$ROOTCMD rm -f /tmp/pks/docker /etc/apt/trusted.gpg.d/docker.gpg~
 fi
 
-if ifclass REGISTRY ; then
-
-	echo "registry key import"
-	
+if ifclass REGISTRY ; then	
 	pub_key=$($ROOTCMD gpg --keyid-format=short --list-keys registry | grep pub | head -1 | grep -o -P '(?<=/)[A-Z0-9]{8}')
-
-	$ROOTCMD gpg --armor --output /etc/apt/trusted.gpg.d/registy.gpg --export $pub_key
-
-	#fcopy -iSM /tmp/pks/docker
-	#$ROOTCMD cat /tmp/pks/docker
-	#$ROOTCMD apt-key --keyring /etc/apt/trusted.gpg.d/docker.gpg add /tmp/pks/docker
-	#$ROOTCMD rm -f /tmp/pks/docker /etc/apt/trusted.gpg.d/docker.gpg~
+	$ROOTCMD gpg --armor --export $pub_key | apt-key --keyring /etc/apt/trusted.gpg.d/registry.gpg add -
 fi
 
 $ROOTCMD ls -la /etc/apt/trusted.gpg.d
