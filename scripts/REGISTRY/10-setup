@@ -52,7 +52,7 @@ echo "A"
 
 $ROOTCMD /usr/bin/expect <<EOF
 set timeout 30
-spawn $ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
+$ROOTCMD spawn gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
 expect {
     timeout                                             {send_user "\n!!! timeout !!!\n"; exit 127}
     "Bad passphrase*"                                   {exit 127}
