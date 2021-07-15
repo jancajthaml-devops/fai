@@ -12,6 +12,8 @@ pinentry-program /usr/bin/pinentry
 allow-preset-passphrase
 EOF
 
+$ROOTCMD gpg-connect-agent reloadagent /bye
+
 cat > $target/registry <<-EOF
      %echo Generating a basic OpenPGP key
      Key-Type: DSA
