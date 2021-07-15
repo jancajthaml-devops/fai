@@ -47,7 +47,7 @@ pub_key=$($ROOTCMD gpg --keyid-format=short --list-keys registry | grep pub | he
 echo "pub key ${pub_key}"
 echo "passphrase ${passphrase}"
 
-$ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key} 2> /dev/null <<EOF
+$ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key} <<EOF
 addkey
 4
 4096
@@ -56,6 +56,10 @@ ${passphrase}
 EOF
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | grep ':s:' | head -1 | cut -d':' -f5)
+
+# fixme if sub_key empty panic
+
+$ROOTCMD cat /var/www/repos/apt/debian/conf/distributions
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
