@@ -67,6 +67,8 @@ echo "A"
 
 fcopy -iM /usr/sbin/reporepro-auto
 
+ls -la /usr/sbin
+
 echo "B"
 
 $ROOTCMD cat /usr/sbin/reporepro-auto
