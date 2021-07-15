@@ -47,7 +47,7 @@ pub_key=$($ROOTCMD gpg --keyid-format=short --list-keys registry | grep pub | he
 echo "pub key ${pub_key}"
 echo "passphrase ${passphrase}"
 
-$ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key} <<EOF
+$ROOTCMD gpg --command-fd=0 --pinentry-mode=loopback --edit-key ${pub_key} <<EOF
 addkey
 4
 4096
@@ -82,7 +82,7 @@ verbose
 ask-passphrase
 EOF
 
-$ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
+$ROOTCMD gpg --armor --output /var/www/repos/apt/debian/gpg --export $sub_key
 
 fcopy -iM /usr/sbin/reprepro-auto
 

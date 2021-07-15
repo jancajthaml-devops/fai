@@ -7,7 +7,7 @@ if ifclass DOCKER ; then
 fi
 
 if ifclass REGISTRY ; then
-	$ROOTCMD apt-key --keyring /etc/apt/trusted.gpg.d/registry.gpg add /var/www/repos/apt/debian/registry.gpg.key
+	$ROOTCMD apt-key --keyring /etc/apt/trusted.gpg.d/registry.gpg add /var/www/repos/apt/debian/gpg
 	$ROOTCMD rm -f /etc/apt/trusted.gpg.d/registry.gpg~
 fi
 
