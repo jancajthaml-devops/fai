@@ -4,7 +4,7 @@ set timeout 5
 
 set passphrase "$env(SIGNING_PASSWORD)"
 
-spawn reprepro -b /var/www/repos/apt/debian $argv
+spawn reprepro -b /var/www/repos/apt/debian {*}$argv
 
 expect {
     timeout                         {exit 0}

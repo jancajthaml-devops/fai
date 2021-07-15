@@ -8,8 +8,6 @@ $ROOTCMD gpg --list-keys
 
 distro=$($ROOTCMD cat /etc/os-release | grep VERSION_CODENAME | sed "s/VERSION_CODENAME=*//g")
 
-echo "distro: ${distro}"
-
 $ROOTCMD cat > /root/.gnupg/gpg-agent.conf <<-EOF
 default-cache-ttl 0
 pinentry-program /usr/bin/pinentry
