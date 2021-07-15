@@ -1,1 +1,1 @@
-deb http://localhost/repos/apt/debian buster main
+deb http://localhost/debian buster main

@@ -1,12 +1,12 @@
 # /etc/apache2/sites-available/debian.conf
 <VirtualHost *:80>
         ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/
+        DocumentRoot /var/www/repos/apt/
 
         ErrorLog ${APACHE_LOG_DIR}/error.log
         CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-        <Directory "/var/www/repos/" >
+        <Directory "/var/www/repos/apt/" >
                 Order allow,deny
                 Allow from all
         </Directory>
