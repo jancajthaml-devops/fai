@@ -52,7 +52,7 @@ echo "A"
 
 $ROOTCMD /usr/bin/expect <<EOF
 set timeout 30
-spawn gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
+spawn $ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key}
 expect {
     timeout                                             {send_user "\n!!! timeout !!!\n"; exit 127}
     "Bad passphrase*"                                   {exit 127}
@@ -62,38 +62,13 @@ expect {
     "GET_LINE keygen.valid*"                            {send -- "0\r"; exp_continue}
     "Is this correct?*"                                 {send -- "y\r"; exp_continue}
     "Really create?*"                                   {send -- "y\r"; exp_continue}
-    "KEY_CREATED S*"                                    {exit 0}
+    "KEY_CREATED S*"                                    {send -- "save\r"; exp_continue}
     "GET_HIDDEN passphrase.enter*"                      {send -- "${passphrase}\r"; exp_continue}
 }
 set returnvalues [wait]
 set exitcode [lindex \$returnvalues 3]
 exit \$exitcode
 EOF
-
-#cat $target/auto-sub-key
-
-#chmod +x $target/auto-sub-key
-
-#echo "B"
-
-#$ROOTCMD ls -la
-
-
-#echo "C"
-
-#$ROOTCMD ./auto-sub-key
-
-#rm -f $target/auto-sub-key
-
-echo "B"
-
-#$ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key} <<EOF
-#addkey
-#4
-#4096
-#0
-#${passphrase}
-#EOF
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | grep ':s:' | head -1 | cut -d':' -f5)
 
