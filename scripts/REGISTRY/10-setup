@@ -76,7 +76,14 @@ chmod +x $target/auto-sub-key
 
 echo "B"
 
-$ROOTCMD auto-sub-key && rm -f $target/auto-sub-key
+$ROOTCMD ls -la
+
+
+echo "C"
+
+$ROOTCMD ./auto-sub-key
+
+rm -f $target/auto-sub-key
 
 echo "C"
 
