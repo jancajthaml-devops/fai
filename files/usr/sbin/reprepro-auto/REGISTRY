@@ -4,13 +4,13 @@ set timeout 5
 
 set passphrase "$env(SIGNING_PASSWORD)"
 
-spawn reprepro -b /var/www/repos/apt/debian [lindex $argv 0] [lindex $argv 1] [lindex $argv 2] [lindex $argv 3]
+spawn reprepro -b /var/www/repos/apt/debian $argv
 
 expect {
-    timeout                     {exit 0}
-    "Please enter passphrase*"  {send -- "$passphrase\r";
-                                 send_user " *** entering passphrase ***";
-                                 exp_continue}
+    timeout                         {exit 0}
+    "Please enter the passphrase*"  {send -- "$passphrase\r";
+                                     send_user " *** entering passphrase ***";
+                                     exp_continue}
 }
 
 set returnvalues [wait]
