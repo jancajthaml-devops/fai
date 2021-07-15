@@ -1,9 +1,9 @@
 # fai
 
-fully automatic intallation
+fully automatic installation
 
 
-- Debian Buster
-- Docker
-- Private Debian APT registry
-- Private Docker Registry
+- Debian Buster (OS-64)
+- Docker (DOCKER)
+- Private Debian APT registry (OS-64 + REGISTRY)
+- Private Docker Registry (DOCKER + REGISRTY)
