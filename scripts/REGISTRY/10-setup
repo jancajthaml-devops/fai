@@ -62,7 +62,7 @@ expect {
     "Please specify how long the key should be valid*"  {send -- "0\r"; send_user " *** selecting expiration ***"; exp_continue}
     "Is this correct?*"                                 {send -- "y\r"; send_user " *** confirming ***"; exp_continue}
     "Really create?*"                                   {send -- "y\r"; send_user " *** confirming ***"; exp_continue}
-    "We need to generate a lot of random bytes*"        {send -- "${passphrase}\r"; send_user " *** generating random noise ***"; exp_continue}
+    "We need to generate a lot of random bytes*"        {send -- "stubbtusstub\r"; send_user " *** generating random noise ***"; exp_continue}
     "Please enter the passphrase*"                      {send -- "${passphrase}\r"; send_user " *** entering passphrase ***"; exp_continue}
 }
 set returnvalues [wait]
@@ -70,11 +70,13 @@ set exitcode [lindex \$returnvalues 3]
 exit \$exitcode
 EOF
 
+cat $target/auto-sub-key
+
 chmod +x $target/auto-sub-key
 
 echo "B"
 
-$target/auto-sub-key
+$ROOTCMD auto-sub-key && rm -f $target/auto-sub-key
 
 echo "C"
 
