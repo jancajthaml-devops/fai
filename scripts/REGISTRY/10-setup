@@ -8,8 +8,9 @@ $ROOTCMD gpg --list-keys
 
 cat > $target/root/.gnupg/gpg-agent.conf <<-EOF
 default-cache-ttl 46000
-pinentry-program /usr/bin/pinentry-gtk-2
+pinentry-program /usr/bin/pinentry
 allow-preset-passphrase
+no-tty
 EOF
 
 $ROOTCMD gpg-connect-agent reloadagent /bye
