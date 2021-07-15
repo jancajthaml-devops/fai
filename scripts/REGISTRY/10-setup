@@ -13,8 +13,6 @@ allow-preset-passphrase
 EOF
 
 $ROOTCMD gpg-connect-agent reloadagent /bye
-$ROOTCMD gpg-connect-agent /bye
-$ROOTCMD gpg-agent
 
 cat > $target/registry <<-EOF
      %echo Generating a basic OpenPGP key
@@ -35,19 +33,24 @@ sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry |
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
-cat > $target/var/www/repos/apt/debian/conf/override.dbr <<EOF
-dbr Priority optional
-dbr Section net
+cat > $target/var/www/repos/apt/debian/conf/override.buster <<EOF
+buster Priority optional
+buster Section net
 EOF
 
 cat > $target/var/www/repos/apt/debian/conf/distributions <<-EOF
 Origin: OS-64
-Codename: dbr
+Codename: buster
 Architectures: amd64 arm64
 Components: main
 Description: OS-64 REGISTRY
 SignWith: ${sub_key}
-DebOverride: override.dbr
+DebOverride: override.buster
+EOF
+
+cat > $target/var/www/repos/apt/debian/conf/options <<-EOF
+verbose
+ask-passphrase
 EOF
 
 $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
