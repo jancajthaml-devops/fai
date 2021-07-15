@@ -67,6 +67,9 @@ EOF
 
 $ROOTCMD gpg --armor --output /var/www/repos/apt/debian/registry.gpg.key --export $sub_key
 
+# FIXME to trust self
+#$ROOTCMD cat /var/www/repos/apt/debian/registry.gpg.key | apt-key add -
+
 fcopy -iM /usr/sbin/reprepro-auto
 
 ainsl -a /root/.bashrc "export SIGNING_PASSWORD=${passphrase}"

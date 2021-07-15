@@ -2,4 +2,10 @@
 
 fcopy -iSM /etc/apt/sources.list.d/docker.list
 
+fcopy -iSM /tmp/pks/docker
+
+$ROOTCMD cat /tmp/pks/docker | apt-key add -
+
+$ROOTCMD rm -f /tmp/pks/docker
+
 exit 0
