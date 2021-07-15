@@ -12,7 +12,7 @@ pinentry-program /usr/bin/pinentry
 allow-preset-passphrase
 EOF
 
-$ROOTCMD gpg-connect-agent reloadagent /bye
+$ROOTCMD which gpg-preset-passphrase
 
 cat > $target/registry <<-EOF
      %echo Generating a basic OpenPGP key
@@ -30,6 +30,12 @@ EOF
 $ROOTCMD gpg --batch --generate-key registry && rm $target/registry
 
 sub_key=$($ROOTCMD gpg --with-colons --keyid-format=short --list-keys registry | grep sub | head -1 | cut -d':' -f5)
+
+#/path/to/gpg-preset-passphrase -c ${sub_key} <<EOF
+#${ROOTPW}
+#EOF
+
+$ROOTCMD gpg-connect-agent reloadagent /bye
 
 mkdir -p $target/var/www/repos/apt/debian/conf
 
