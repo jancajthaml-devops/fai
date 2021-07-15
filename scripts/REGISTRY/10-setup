@@ -43,11 +43,16 @@ $ROOTCMD gpg --batch --generate-key registry && rm $target/registry
 
 pub_key=$($ROOTCMD gpg --keyid-format=short --list-keys registry | grep pub | head -1 | grep -o -P '(?<=/)[A-Z0-9]{8}')
 
-$ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key} <<-EOF
+
+echo "pub key ${pub_key}"
+echo "passphrase ${passphrase}"
+
+$ROOTCMD gpg --command-fd=0 --status-fd=1 --pinentry-mode=loopback --edit-key ${pub_key} <<EOF
 addkey
 4
 4096
 0
+${passphrase}
 y
 y
 save
@@ -62,7 +67,7 @@ ${distro} Priority optional
 ${distro} Section net
 EOF
 
-cat > $target/var/www/repos/apt/debian/conf/distributions <<-EOF
+cat > $target/var/www/repos/apt/debian/conf/distributions <<EOF
 Origin: OS-64
 Codename: ${distro}
 Architectures: amd64 arm64
@@ -72,7 +77,7 @@ SignWith: ${sub_key}
 DebOverride: override.${distro}
 EOF
 
-cat > $target/var/www/repos/apt/debian/conf/options <<-EOF
+cat > $target/var/www/repos/apt/debian/conf/options <<EOF
 verbose
 ask-passphrase
 EOF
