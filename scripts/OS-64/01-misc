@@ -20,6 +20,8 @@ else
 fi
 fcopy -iM /etc/hosts /etc/motd
 
+ifclass DHCP || hostnamectl set-hostname --static localhost
+
 # make /root accessible only by root
 chmod -c 0700 $target/root
 chown -c root:root $target/root
@@ -34,7 +36,7 @@ chmod -c 1777 ${target}/tmp
 chown -c 0:0  ${target}/tmp
 
 # add additional user account
-if [ -n "$username" ]; then
+if [ -n "$username" ] ; then
     if ! $ROOTCMD getent passwd $username ; then
 		$ROOTCMD adduser --disabled-login --gecos "$username user" $username
 		$ROOTCMD usermod -p "$USERPW" $username
