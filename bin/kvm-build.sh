@@ -36,3 +36,7 @@ virt-install \
 	--import
 
 rm -f /opt/fai/$name.vdi
+
+virsh autostart $name
+
+virsh dominfo $name

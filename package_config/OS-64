@@ -1,4 +1,5 @@
 PACKAGES install-norec
+dbus
 rsync
 time
 locales
