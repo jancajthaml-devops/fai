@@ -1,0 +1,9 @@
+#! /bin/bash
+
+if [ $FAI_ACTION != "install" -a $FAI_ACTION != "dirinstall" ] ; then
+   exit 0
+fi
+
+$ROOTCMD apt-get $aptopt update
+
+$ROOTCMD apt-get -y install ca-certificates
