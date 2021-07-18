@@ -1,0 +1,11 @@
+#! /bin/bash
+
+echo "A"
+
+$ROOTCMD apt-get $aptopt update
+
+echo "B"
+
+$ROOTCMD apt-get -y install ca-certificates
+
+echo "C"
