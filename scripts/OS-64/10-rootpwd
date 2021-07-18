@@ -10,7 +10,7 @@ elif [ -n "$username" ] ; then
     # enable sudo for user
     ainsl /etc/sudoers "$username   ALL = ALL"
     if [ ! -f $target/usr/bin/sudo ] ; then
-	   echo "WARNING. Package sudo is not installed"
+      echo "WARNING. Package sudo is not installed"
     fi
 fi
 

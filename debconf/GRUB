@@ -1,0 +1,1 @@
+grub-pc grub2/linux_cmdline_default string elevator=noop quiet
