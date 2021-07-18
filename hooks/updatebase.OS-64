@@ -1,11 +1,19 @@
 #! /bin/bash
 
-echo "A"
+if [ $FAI_ACTION != "install" -a $FAI_ACTION != "dirinstall" ] ; then
+   exit 0
+fi
+
+cat > $target/etc/atp/apt.conf.d/99verify-peer <<-EOF
+Acquire { https::Verify-Peer false }
+EOF
 
 $ROOTCMD apt-get $aptopt update
 
-echo "B"
-
 $ROOTCMD apt-get -y install ca-certificates
 
-echo "C"
+cat > $target/etc/atp/apt.conf.d/99verify-peer <<-EOF
+Acquire { https::Verify-Peer true }
+EOF
+
+$ROOTCMD apt-get $aptopt update
