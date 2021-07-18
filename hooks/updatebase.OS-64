@@ -10,6 +10,12 @@ cat > $target/etc/atp/apt.conf.d/99verify-peer <<-EOF
 Acquire { https::Verify-Peer false }
 EOF
 
+echo "A"
+
+cat $target/etc/atp/apt.conf.d/99verify-peer
+
+echo "B"
+
 $ROOTCMD apt-get $aptopt update
 
 $ROOTCMD apt-get -y install ca-certificates
