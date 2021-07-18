@@ -4,7 +4,7 @@ if [ $FAI_ACTION != "install" -a $FAI_ACTION != "dirinstall" ] ; then
    exit 0
 fi
 
-mdkri -p $target/etc/atp/apt.conf.d
+mkdir -p $target/etc/atp/apt.conf.d
 
 cat > $target/etc/atp/apt.conf.d/99verify-peer <<-EOF
 Acquire { https::Verify-Peer false }
