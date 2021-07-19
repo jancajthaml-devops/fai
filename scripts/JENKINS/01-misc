@@ -1,0 +1,5 @@
+#! /bin/bash
+
+fcopy -iSM /etc/apt/sources.list.d/jenkins.list
+
+exit 0
