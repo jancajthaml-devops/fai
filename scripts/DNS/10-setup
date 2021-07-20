@@ -1,0 +1,9 @@
+#!/bin/bash
+
+fcopy -M /etc/dnsmaq.conf
+
+$ROOTCMD /usr/sbin/dnsmasq --test
+
+fcopy -M /etc/resolv.conf
+
+$ROOTCMD chattr +i /etc/resolv.conf
