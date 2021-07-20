@@ -71,7 +71,7 @@ domain-needed
 
 # Add local-only domains here, queries in these domains are answered
 # from /etc/hosts or DHCP only.
-local=/mydomain/
+local=/local/
 
 # Add domains which you want to force to an IP address here.
 # The example below send any host in double-click.net to a local
@@ -141,7 +141,7 @@ expand-hosts
 # 2) Sets the "domain" DHCP option thereby potentially setting the
 #    domain of all systems configured by DHCP
 # 3) Provides the domain part for "expand-hosts"
-domain=mydomain
+domain=local
 
 # Set a different domain for a particular subnet
 #domain=wireless.thekelleys.org.uk,192.168.2.0/24
@@ -494,7 +494,6 @@ domain=mydomain
 # to 5. See page 19 of
 # http://download.intel.com/design/archives/wfm/downloads/pxespec.pdf
 
-
 # Enable dnsmasq's built-in TFTP server
 #enable-tftp
 
@@ -559,7 +558,7 @@ domain=mydomain
 # The arguments sent to the script are "add" or "del",
 # then the MAC address, the IP address and finally the hostname
 # if there is one.
-#dhcp-script=/bin/echo
+dhcp-script=/bin/echo
 
 # Set the cachesize here.
 #cache-size=150
@@ -675,5 +674,5 @@ domain=mydomain
 
 # If a DHCP client claims that its name is "wpad", ignore that.
 # This fixes a security hole. see CERT Vulnerability VU#598349
-#dhcp-name-match=set:wpad-ignore,wpad
-#dhcp-ignore-names=tag:wpad-ignore
+dhcp-name-match=set:wpad-ignore,wpad
+dhcp-ignore-names=tag:wpad-ignore
